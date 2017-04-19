@@ -8,7 +8,7 @@
 (require 'haskell)
 (require 'lsp-mode)
 
-(defun lsp--haskell-session-cabal-dir ()
+(defun lsp-haskell--session-cabal-dir ()
   "Get the session cabal-dir."
   (let* ((cabal-file (haskell-cabal-find-file))
          (cabal-dir (if cabal-file
@@ -19,16 +19,17 @@
       (message "cabal-dir: %s" cabal-dir)
       cabal-dir)))
 
-(defun lsp--haskell-get-root ()
+(defun lsp-haskell--get-root ()
   "TODO: use projectile directory"
-  (let ((dir (lsp--haskell-session-cabal-dir)))
+  (let ((dir (lsp-haskell--session-cabal-dir)))
     (if (string= dir "/")
         (user-error (concat "Couldn't find cabal file, using:" dir))
       dir)))
 
 ;;;###autoload
-(lsp-define-client 'haskell-mode "haskell" 'stdio #'lsp--haskell-get-root
+(lsp-define-client 'haskell-mode "haskell" 'stdio #'lsp-haskell--get-root
   :command '("hie" "--lsp" "-d" "-l" "/tmp/hie.log")
   :name "Haskell Language Server")
 
 (provide 'lsp-haskell)
+;;; lsp-haskell.el ends here
