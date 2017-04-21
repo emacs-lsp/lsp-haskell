@@ -47,9 +47,9 @@
 ;; ---------------------------------------------------------------------
 
 ;;;###autoload
-(lsp-define-client 'haskell-mode "haskell" 'stdio #'lsp-haskell--get-root
-  :command '("hie" "--lsp" "-d" "-l" "/tmp/hie.log")
-  :name "Haskell Language Server")
+(lsp-define-stdio-client 'haskell-mode "haskell" 'stdio #'lsp-haskell--get-root
+			  "Haskell Language Server"
+			 '("hie" "--lsp" "-d" "-l" "/tmp/hie.log"))
 
 (provide 'lsp-haskell)
 ;;; lsp-haskell.el ends here
