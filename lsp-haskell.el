@@ -26,6 +26,26 @@
         (user-error (concat "Couldn't find cabal file, using:" dir))
       dir)))
 
+;; ---------------------------------------------------------------------
+;; HaRe functions
+
+(defun lsp-demote ()
+  "Demote a function to the level it is used"
+  (interactive)
+  (lsp--send-execute-command
+   "hare:demote"
+   (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
+           `(:start_pos (:position ,(lsp-point-to-position (point)))))))
+
+(defun lsp-lift-to-top ()
+  "Lift a function to the top level"
+  (interactive)
+  (lsp--cur-workspace-check)
+  (user-error "Not implemented")
+  )
+
+;; ---------------------------------------------------------------------
+
 ;;;###autoload
 (lsp-define-client 'haskell-mode "haskell" 'stdio #'lsp-haskell--get-root
   :command '("hie" "--lsp" "-d" "-l" "/tmp/hie.log")
