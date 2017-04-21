@@ -9,7 +9,7 @@ server using Microsoft's
 [Language Server Protocol](https://github.com/Microsoft/language-server-protocol/).
 
 The library is designed to integrate with existing Emacs IDE frameworks
-(completion-at-point, xref (beginning with Emacs 25.1), flycheck,, haskell-mode, intero, etc).
+(completion-at-point, xref (beginning with Emacs 25.1), flycheck, haskell-mode, intero, etc).
 
 
 *This package is still under development, and is not recommended for daily use.*
