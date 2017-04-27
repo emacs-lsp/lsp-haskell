@@ -32,6 +32,7 @@
 (defun lsp-demote ()
   "Demote a function to the level it is used"
   (interactive)
+  (lsp--cur-workspace-check)
   (lsp--send-execute-command
    "hare:demote"
    (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
@@ -41,8 +42,19 @@
   "Lift a function to the top level"
   (interactive)
   (lsp--cur-workspace-check)
-  (user-error "Not implemented")
-  )
+  (lsp--send-execute-command
+   "hare:lifttotoplevel"
+   (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
+           `(:start_pos (:position ,(lsp-point-to-position (point)))))))
+
+(defun lsp-lift-level ()
+  "Lift a function to the top level"
+  (interactive)
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "hare:liftonelevel"
+   (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
+           `(:start_pos (:position ,(lsp-point-to-position (point)))))))
 
 ;; ---------------------------------------------------------------------
 
@@ -50,6 +62,7 @@
 (lsp-define-stdio-client 'haskell-mode "haskell" 'stdio #'lsp-haskell--get-root
 			  "Haskell Language Server"
 			 '("hie" "--lsp" "-d" "-l" "/tmp/hie.log"))
+        ;; '("lsp-hello"))
 
 (provide 'lsp-haskell)
 ;;; lsp-haskell.el ends here
