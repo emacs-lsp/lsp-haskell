@@ -38,6 +38,16 @@
    (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
            `(:start_pos (:position ,(lsp-point-to-position (point)))))))
 
+(defun lsp-duplicate-definition (newname)
+  "Duplicate a definition"
+  (interactive "sNew definition name: ")
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "hare:dupdef"
+   (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
+           `(:start_pos (:position ,(lsp-point-to-position (point))))
+           `(:name (:text ,newname)))))
+
 (defun lsp-lift-to-top ()
   "Lift a function to the top level"
   (interactive)
