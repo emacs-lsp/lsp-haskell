@@ -8,24 +8,6 @@
 (require 'haskell)
 (require 'lsp-mode)
 
-(defun lsp-haskell--session-cabal-dir ()
-  "Get the session cabal-dir."
-  (let* ((cabal-file (haskell-cabal-find-file))
-         (cabal-dir (if cabal-file
-                        (file-name-directory cabal-file)
-                      "" ;; no cabal file, use directory only
-                      )))
-    (progn
-      (message "cabal-dir: %s" cabal-dir)
-      cabal-dir)))
-
-(defun lsp-haskell--get-root ()
-  "TODO: use projectile directory"
-  (let ((dir (lsp-haskell--session-cabal-dir)))
-    (if (string= dir "/")
-        (user-error (concat "Couldn't find cabal file, using:" dir))
-      dir)))
-
 ;; ---------------------------------------------------------------------
 ;; HaRe functions
 
