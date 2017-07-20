@@ -1,8 +1,6 @@
 lsp-haskell
 ===========
 
-[![Join the chat at https://gitter.im/emacs-lsp/lsp-mode](https://badges.gitter.im/emacs-lsp/lsp-mode.svg)](https://gitter.im/emacs-lsp/lsp-mode?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 An Emacs Lisp library for interacting with
 a [haskell-ide-engine](https://github.com/haskell/haskell-ide-engine/)
 server using Microsoft's
