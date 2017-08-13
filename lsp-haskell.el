@@ -17,8 +17,8 @@
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
    "hare:demote"
-   (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
-           `(:start_pos (:position ,(lsp-point-to-position (point)))))))
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-duplicate-definition (newname)
   "Duplicate a definition"
@@ -26,9 +26,9 @@
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
    "hare:dupdef"
-   (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
-           `(:start_pos (:position ,(lsp-point-to-position (point))))
-           `(:name (:text ,newname)))))
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))
+             :text ,newname))))
 
 (defun lsp-if-to-case ()
   "Convert an if statement to a case statement"
@@ -36,18 +36,9 @@
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
    "hare:iftocase"
-   (vector `(:file      (:textDocument ,(lsp-text-document-identifier)))
-           `(:start_pos (:position     ,(lsp-get-start-position)))
-           `(:end_pos   (:position     ,(lsp-get-end-position))))))
-
-(defun lsp-lift-to-top ()
-  "Lift a function to the top level"
-  (interactive)
-  (lsp--cur-workspace-check)
-  (lsp--send-execute-command
-   "hare:lifttotoplevel"
-   (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
-           `(:start_pos (:position ,(lsp-point-to-position (point)))))))
+   (vector `(:file      ,(concat "file://" buffer-file-name)
+             :start_pos ,(lsp-get-start-position)
+             :end_pos   ,(lsp-get-end-position)))))
 
 (defun lsp-lift-level ()
   "Lift a function to the top level"
@@ -55,8 +46,17 @@
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
    "hare:liftonelevel"
-   (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
-           `(:start_pos (:position ,(lsp-point-to-position (point)))))))
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))))))
+
+(defun lsp-lift-to-top ()
+  "Lift a function to the top level"
+  (interactive)
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "hare:lifttotoplevel"
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-delete-definition ()
   "Delete a definition"
@@ -64,8 +64,8 @@
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
    "hare:deletedef"
-   (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
-           `(:start_pos (:position ,(lsp-point-to-position (point)))))))
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-generalise-applicative ()
   "Generalise a monadic function to use applicative"
@@ -73,8 +73,8 @@
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
    "hare:genapplicative"
-   (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
-           `(:start_pos (:position ,(lsp-point-to-position (point)))))))
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))))))
 
 ;; ---------------------------------------------------------------------
 
