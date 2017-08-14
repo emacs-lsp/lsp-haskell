@@ -8,12 +8,82 @@
 (require 'haskell)
 (require 'lsp-mode)
 
+;; ---------------------------------------------------------------------
+;; HaRe functions
+
+(defun lsp-demote ()
+  "Demote a function to the level it is used"
+  (interactive)
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "hare:demote"
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))))))
+
+(defun lsp-duplicate-definition (newname)
+  "Duplicate a definition"
+  (interactive "sNew definition name: ")
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "hare:dupdef"
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))
+             :text ,newname))))
+
+(defun lsp-if-to-case ()
+  "Convert an if statement to a case statement"
+  (interactive)
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "hare:iftocase"
+   (vector `(:file      ,(concat "file://" buffer-file-name)
+             :start_pos ,(lsp-get-start-position)
+             :end_pos   ,(lsp-get-end-position)))))
+
+(defun lsp-lift-level ()
+  "Lift a function to the top level"
+  (interactive)
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "hare:liftonelevel"
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))))))
+
+(defun lsp-lift-to-top ()
+  "Lift a function to the top level"
+  (interactive)
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "hare:lifttotoplevel"
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))))))
+
+(defun lsp-delete-definition ()
+  "Delete a definition"
+  (interactive)
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "hare:deletedef"
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))))))
+
+(defun lsp-generalise-applicative ()
+  "Generalise a monadic function to use applicative"
+  (interactive)
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "hare:genapplicative"
+   (vector `(:file ,(concat "file://" buffer-file-name)
+             :pos  ,(lsp-point-to-position (point))))))
+
+;; ---------------------------------------------------------------------
+
 (defun lsp-haskell--session-cabal-dir ()
   "Get the session cabal-dir."
   (let* ((cabal-file (haskell-cabal-find-file))
          (cabal-dir (if cabal-file
                         (file-name-directory cabal-file)
-                      "" ;; no cabal file, use directory only
+                      "." ;; no cabal file, use directory only
                       )))
     (progn
       (message "cabal-dir: %s" cabal-dir)
@@ -27,29 +97,12 @@
       dir)))
 
 ;; ---------------------------------------------------------------------
-;; HaRe functions
-
-(defun lsp-demote ()
-  "Demote a function to the level it is used"
-  (interactive)
-  (lsp--send-execute-command
-   "hare:demote"
-   (vector `(:file (:textDocument ,(lsp-text-document-identifier)))
-           `(:start_pos (:position ,(lsp-point-to-position (point)))))))
-
-(defun lsp-lift-to-top ()
-  "Lift a function to the top level"
-  (interactive)
-  (lsp--cur-workspace-check)
-  (user-error "Not implemented")
-  )
-
-;; ---------------------------------------------------------------------
 
 ;;;###autoload
 (lsp-define-stdio-client 'haskell-mode "haskell" 'stdio #'lsp-haskell--get-root
 			  "Haskell Language Server"
 			 '("hie" "--lsp" "-d" "-l" "/tmp/hie.log"))
+        ;; '("lsp-hello"))
 
 (provide 'lsp-haskell)
 ;;; lsp-haskell.el ends here
