@@ -19,7 +19,7 @@ Clone this repository and https://github.com/emacs-lsp/lsp-mode to suitable path
 (add-to-list 'load-path "<path to lsp-mode>")
 (require 'lsp-haskell)
 (require 'lsp-mode)
-(global-lsp-mode t)
+(add-to-list 'haskell-mode-hook #'lsp-mode)
 ```
 to your .emacs.
 
