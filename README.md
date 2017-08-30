@@ -1,6 +1,8 @@
 lsp-haskell
 ===========
 
+[![MELPA](https://melpa.org/packages/lsp-haskell-badge.svg)](https://melpa.org/#/lsp-haskell)
+
 An Emacs Lisp library for interacting with
 a [haskell-ide-engine](https://github.com/haskell/haskell-ide-engine/)
 server using Microsoft's
