@@ -21,7 +21,7 @@ Clone this repository and https://github.com/emacs-lsp/lsp-mode to suitable path
 (add-to-list 'load-path "<path to lsp-mode>")
 (require 'lsp-haskell)
 (require 'lsp-mode)
-(add-to-list 'haskell-mode-hook #'lsp-mode)
+(add-hook 'haskell-mode-hook #'lsp-haskell-enable)
 ```
 to your .emacs.
 
