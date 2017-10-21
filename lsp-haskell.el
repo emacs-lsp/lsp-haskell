@@ -252,10 +252,5 @@ Each option is a plist of (:key :default :title) wherein:
 (lsp-define-stdio-client lsp-haskell "haskell"  #'lsp-haskell--get-root
                          '("hie" "--lsp" "-d" "-l" "/tmp/hie.log"))
 
-;; (lsp-define-stdio-client 'haskell-mode "haskell" 'stdio #'lsp-haskell--get-root
-;; 			  "Haskell Language Server"
-;; 			 '("hie" "--lsp" "-d" "-l" "/tmp/hie.log"))
-;;         ;; '("lsp-hello"))
-
 (provide 'lsp-haskell)
 ;;; lsp-haskell.el ends here
