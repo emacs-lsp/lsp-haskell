@@ -15,15 +15,25 @@ The library is designed to integrate with existing Emacs IDE frameworks
 *This package is still under development, and is not recommended for daily use.*
 ## Installation
 
-Clone this repository and https://github.com/emacs-lsp/lsp-mode to suitable paths, and add
+Clone this repository, https://github.com/emacs-lsp/lsp-mode and https://github.com/emacs-lsp/lsp-ui
+to suitable paths, and add
+
 ```emacs-lisp
 (add-to-list 'load-path "<path to lsp-haskell>")
 (add-to-list 'load-path "<path to lsp-mode>")
+(add-to-list 'load-path "<path to lsp-ui>")
+
+(with-eval-after-load 'lsp-mode
+  (require 'lsp-flycheck))
+(require 'lsp-ui)
+(add-hook 'lsp-mode-hook 'lsp-ui-mode)
 (require 'lsp-haskell)
-(require 'lsp-mode)
-(add-to-list 'haskell-mode-hook #'lsp-haskell-enable)
+(add-hook 'haskell-mode-hook #'lsp-haskell-enable)
+
 ```
 to your .emacs.
+
+Note: All three packages are also available via MELPA.
 
 It needs the HIE server in your path, so
 
