@@ -9,6 +9,29 @@
 (require 'lsp-mode)
 
 ;; ---------------------------------------------------------------------
+;; Configuration
+
+;;;###autoload
+(defgroup lsp-haskell nil
+  "Customization group for ‘lsp-haskell’."
+  :group 'lsp-mode)
+
+;;;###autoload
+(defcustom lsp-haskell-process-path-hie
+  "hie"
+  "The path for starting the haskell-ide-engine server."
+  :group 'lsp-haskell
+  :type '(choice string))
+
+;;;###autoload
+(defcustom lsp-haskell-process-args-hie
+  '("-d" "-l" "/tmp/hie.log")
+  "The arguments for starting the haskell-ide-engine server.
+For a debug log, use `-d -l /tmp/hie.log'."
+  :group 'lsp-haskell
+  :type '(repeat (string :tag "Argument")))
+
+;; ---------------------------------------------------------------------
 ;; HaRe functions
 
 (defun lsp-demote ()
@@ -250,8 +273,18 @@ Each option is a plist of (:key :default :title) wherein:
 ;; ---------------------------------------------------------------------
 
 (lsp-define-stdio-client lsp-haskell "haskell" #'lsp-haskell--get-root
-			 '("hie" "--lsp" "-d" "-l" "/tmp/hie.log"))
-        ;; '("lsp-hello"))
+			 ;; '("hie" "--lsp" "-d" "-l" "/tmp/hie.log"))
+       ;; '("hie" "--lsp" "-d" "-l" "/tmp/hie.log" "--vomit"))
+       (lsp--haskell-hie-command))
+
+(defun lsp--haskell-hie-command ()
+  "Comamnd and arguments for launching the inferior hie process.
+These are assembled from the customizable variables
+ `lsp-haskell-process-path-hie' and
+ `lsp-haskell-process-args-hie'. If the hie executable is
+ installed via its Makefile, there will be compiler-specific
+ versions with names like 'hie-8.0.2' or 'hie-8.2.2'."
+   (append (list lsp-haskell-process-path-hie "--lsp") lsp-haskell-process-args-hie) )
 
 (provide 'lsp-haskell)
 ;;; lsp-haskell.el ends here
