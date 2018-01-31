@@ -35,7 +35,7 @@ to your .emacs.
 
 Note: All three packages are also available via MELPA.
 
-It needs the HIE server in your path, so
+It needs the HIE server in your path, so either
 
 ```bash
 git clone https://github.com/haskell/haskell-ide-engine
@@ -43,3 +43,11 @@ cd haskell-ide-engine
 stack install
 ```
 
+Or of you are on linux (only place it has been tested, reports please)
+
+```bash
+git clone https://github.com/haskell/haskell-ide-engine
+cd haskell-ide-engine
+make
+```
+This will build executables called `hie-8.0.2`, `hie-8.2.2` etc which can be selected by using`M-x customize` for `lsp-haskell`
