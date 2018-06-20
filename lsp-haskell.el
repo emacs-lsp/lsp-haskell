@@ -18,8 +18,10 @@
 
 ;;;###autoload
 (defcustom lsp-haskell-process-path-hie
-  "hie"
-  "The path for starting the haskell-ide-engine server."
+  ;; "hie"
+  "hie-wrapper"
+  "The path for starting the haskell-ide-engine
+server. hie-wrapper exists on HIE master from 2018-06-10"
   :group 'lsp-haskell
   :type '(choice string))
 
