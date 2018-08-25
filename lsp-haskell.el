@@ -9,7 +9,7 @@
 
 (require 'haskell)
 (require 'lsp-mode)
-(require 'projectilee nil 'noerror)
+(require 'projectile nil 'noerror)
 
 ;; ---------------------------------------------------------------------
 ;; Configuration
