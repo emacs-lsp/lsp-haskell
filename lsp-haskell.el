@@ -5,8 +5,11 @@
 ;; Keywords: haskell
 ;; URL: https://github.com/emacs-lsp/lsp-haskell
 
+;;; Code:
+
 (require 'haskell)
 (require 'lsp-mode)
+(require 'projectilee nil 'noerror)
 
 ;; ---------------------------------------------------------------------
 ;; Configuration
@@ -115,11 +118,16 @@ For a debug log, use `-d -l /tmp/hie.log'."
       cabal-dir)))
 
 (defun lsp-haskell--get-root ()
-  "TODO: use projectile directory"
-  (let ((dir (lsp-haskell--session-cabal-dir)))
-    (if (string= dir "/")
-        (user-error (concat "Couldn't find cabal file, using:" dir))
-      dir)))
+  "Get project root directory.
+
+First searches for root via projectile.  Tries to find cabal file
+if projectile way fails"
+  (if (fboundp 'projectile-project-root)
+      (projectile-project-root)
+    (let ((dir (lsp-haskell--session-cabal-dir)))
+      (if (string= dir "/")
+          (user-error (concat "Couldn't find cabal file, using:" dir))
+        dir))))
 
 ;; ---------------------------------------------------------------------
 
