@@ -122,7 +122,7 @@ For a debug log, use `-d -l /tmp/hie.log'."
 
 First searches for root via projectile.  Tries to find cabal file
 if projectile way fails"
-  (if (fboundp 'projectile-project-root)
+  (if (and (fboundp 'projectile-project-root) (projectile-project-root))
       (projectile-project-root)
     (let ((dir (lsp-haskell--session-cabal-dir)))
       (if (string= dir "/")
