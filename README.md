@@ -13,10 +13,12 @@ The library is designed to integrate with existing Emacs IDE frameworks
 
 
 *This package is still under development, and is not recommended for daily use.*
-## Installation
+
+## Emacs Configuration
 
 Clone this repository, https://github.com/emacs-lsp/lsp-mode and https://github.com/emacs-lsp/lsp-ui
-to suitable paths, and add
+to suitable paths, and add the following to your `.emacs` or `init.el` 
+config file.
 
 ```emacs-lisp
 (add-to-list 'load-path "<path to lsp-haskell>")
@@ -29,17 +31,35 @@ to suitable paths, and add
 (add-hook 'haskell-mode-hook #'lsp-haskell-enable)
 (add-hook 'haskell-mode-hook 'flycheck-mode)
 ```
-to your .emacs.
 
 Note: All three packages are also available via MELPA.
 
-It needs the HIE server in your path, so either
+It needs the HIE server in your path, so follow the appropriate
+OSX or Linux section below accordingly.
+
+## Hie Installation (OSX)
+
+The following steps are recommended to bootstrap `lsp-haskell` on OSX.
 
 ```bash
 git clone https://github.com/haskell/haskell-ide-engine
 cd haskell-ide-engine
-stack install
+make
 ```
+
+We need to run `make` here instead of `stack install` to ensure that 
+all versions of `ghc` are available to support various project 
+requirements.
+
+After this, we need to instruct Emacs to prefer `hie-wrapper` over
+`hie` so Hie can infer which version of ghc we need for a particular
+project.
+
+```elisp
+(setq lsp-haskell-process-path-hie "hie-wrapper")
+```
+
+## Hie Installation (Linux)
 
 Or of you are on linux (only place it has been tested, reports please)
 
