@@ -84,7 +84,7 @@ exposed via a set of interactive functions.
 - `lsp-haskell-set-liquid-on` / `lsp-haskell-set-liquid-off` Turn
   liquid haskell checks on save on or off.
 - `lsp-haskell-set-completion-snippets-on` /
-  `lsp-haskell-set-completion-snippets-off` Wether completion should
+  `lsp-haskell-set-completion-snippets-off` Whether completion should
   return plain text or snippets.
 
 There are also non-interactive versions that do not actually send the
