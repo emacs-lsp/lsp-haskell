@@ -36,6 +36,26 @@ For a debug log, use `-d -l /tmp/hie.log'."
   :group 'lsp-haskell
   :type '(repeat (string :tag "Argument")))
 
+;;;###autoload
+(defcustom lsp-haskell-process-wrapper-function
+  #'identity
+  "Use this to wrap the haskell-ide-engine process started by lsp-haskell.
+
+For example, use the following the start the hie process in a nix-shell:
+
+(lambda (argv)
+  (append
+   (append (list \"nix-shell\" \"-I\" \".\" \"--command\" )
+           (list (mapconcat 'identity argv \" \"))
+           )
+   (list (concat (lsp-haskell--get-root) \"/shell.nix\"))
+   )
+  )"
+  :group 'lsp-haskell
+  :type '(choice
+          (function-item :tag "None" :value identity)
+          (function :tag "Custom function")))
+
 ;; ---------------------------------------------------------------------
 
 (defvar lsp-haskell--config-options (make-hash-table))
@@ -290,7 +310,7 @@ Each option is a plist of (:key :default :title) wherein:
 (lsp-define-stdio-client lsp-haskell "haskell" #'lsp-haskell--get-root
 			 ;; '("hie" "--lsp" "-d" "-l" "/tmp/hie.log"))
        ;; '("hie" "--lsp" "-d" "-l" "/tmp/hie.log" "--vomit"))
-       (lsp--haskell-hie-command))
+       (funcall lsp-haskell-process-wrapper-function (lsp--haskell-hie-command)))
 
 (defun lsp--haskell-hie-command ()
   "Comamnd and arguments for launching the inferior hie process.
