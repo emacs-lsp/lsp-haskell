@@ -74,10 +74,6 @@ For example, use the following the start the hie process in a nix-shell:
           (function :tag "Custom function")))
 
 ;; ---------------------------------------------------------------------
-
-(defvar lsp-haskell--config-options (make-hash-table))
-
-;; ---------------------------------------------------------------------
 ;; HaRe functions
 
 (defun lsp-demote ()
@@ -186,6 +182,29 @@ These are assembled from the customizable variables
  installed via its Makefile, there will be compiler-specific
  versions with names like 'hie-8.0.2' or 'hie-8.2.2'."
    (append (list lsp-haskell-process-path-hie "--lsp") lsp-haskell-process-args-hie) )
+
+;; ---------------------------------------------------------------------
+;; Supporting the new lsp.el operation, as per
+;; https://github.com/emacs-lsp/lsp-mode/blob/master/README-NEXT.md
+
+(eval-after-load 'lsp '(lsp-register-client
+    (make-lsp--client
+     :new-connection (lsp-stdio-connection 'lsp-haskell--hie-command)
+     :major-modes '(haskell-mode)
+     :server-id 'hie
+     ;; :multi-root t
+     :initialization-options 'lsp-haskell--make-init-options)))
+
+(defun lsp-haskell--hie-command ()
+  (funcall lsp-haskell-process-wrapper-function (lsp--haskell-hie-command)))
+
+(defun lsp-haskell--make-init-options ()
+  "Init options for haskell."
+  `(:languageServerHaskell ,lsp-haskell--config-options))
+
+;; ---------------------------------------------------------------------
+
+(defvar lsp-haskell--config-options (make-hash-table))
 
 ;; ---------------------------------------------------------------------
 
