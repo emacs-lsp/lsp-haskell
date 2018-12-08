@@ -14,7 +14,19 @@ The library is designed to integrate with existing Emacs IDE frameworks
 
 *This package is still under development, and is not recommended for daily use.*
 
-## Emacs Configuration
+## Emacs Configuration (new style lsp-mode)
+
+Install [`lsp-mode`](https://github.com/emacs-lsp/lsp-mode) first, and either clone
+this repository, or install from MELPA. Add the following to your `.emacs`:
+
+```emacs-lisp
+(require 'lsp)
+(require 'lsp-ui)
+(require 'lsp-haskell)
+(add-hook 'haskell-mode-hook 'lsp)
+```
+
+## Emacs Configuration (legacy lsp-mode)
 
 Clone this repository, https://github.com/emacs-lsp/lsp-mode and https://github.com/emacs-lsp/lsp-ui
 to suitable paths, and add the following to your `.emacs` or `init.el`
