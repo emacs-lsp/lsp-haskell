@@ -169,11 +169,6 @@ if projectile way fails"
 
 ;; ---------------------------------------------------------------------
 
-(lsp-define-stdio-client lsp-haskell "haskell" #'lsp-haskell--get-root
-			 ;; '("hie" "--lsp" "-d" "-l" "/tmp/hie.log"))
-       ;; '("hie" "--lsp" "-d" "-l" "/tmp/hie.log" "--vomit"))
-       (funcall lsp-haskell-process-wrapper-function (lsp--haskell-hie-command)))
-
 (defun lsp--haskell-hie-command ()
   "Comamnd and arguments for launching the inferior hie process.
 These are assembled from the customizable variables
