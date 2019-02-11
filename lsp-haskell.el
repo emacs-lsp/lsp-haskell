@@ -277,7 +277,7 @@ These are assembled from the customizable variables
 (defun lsp-haskell-set-completion-snippets-on ()
   "Enable providing completion snippets."
   (interactive)
-  (lsp-haskell-set-completionSnippets t)
+  (lsp-haskell-set-completion-snippets t)
   (lsp-haskell--set-configuration))
 
 (defun lsp-haskell-set-completion-snippets-off ()
