@@ -193,8 +193,8 @@ These are assembled from the customizable variables
 (defun lsp-haskell--hie-command ()
   (funcall lsp-haskell-process-wrapper-function (lsp--haskell-hie-command)))
 
-(defun lsp-haskell--make-init-options ()
-  "Init options for haskell."
+(cl-defmethod lsp-initialization-options ((_server (eql hie)))
+  "Initialization options for haskell."
   `(:languageServerHaskell ,lsp-haskell--config-options))
 
 ;; ---------------------------------------------------------------------
