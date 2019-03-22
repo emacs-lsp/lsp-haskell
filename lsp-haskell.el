@@ -235,7 +235,7 @@ These are assembled from the customizable variables
 (defun lsp-haskell-set-hlint-off ()
   "Disable running hlint."
   (interactive)
-  (lsp-haskell-set-hlint nil)
+  (lsp-haskell-set-hlint :json-false)
   (lsp-haskell--set-configuration))
 
 ;; -------------------------------------
@@ -265,7 +265,7 @@ These are assembled from the customizable variables
 (defun lsp-haskell-set-liquid-off ()
   "Disable running liquid haskell on save."
   (interactive)
-  (lsp-haskell-set-liquid nil)
+  (lsp-haskell-set-liquid :json-false)
   (lsp-haskell--set-configuration))
 
 ;; -------------------------------------
@@ -283,7 +283,7 @@ These are assembled from the customizable variables
 (defun lsp-haskell-set-completion-snippets-off ()
   "Disable providing completion snippets."
   (interactive)
-  (lsp-haskell-set-completion-snippets nil)
+  (lsp-haskell-set-completion-snippets :json-false)
   (lsp-haskell--set-configuration))
 
 
