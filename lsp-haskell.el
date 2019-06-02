@@ -184,7 +184,7 @@ These are assembled from the customizable variables
 
 (eval-after-load 'lsp '(lsp-register-client
     (make-lsp--client
-     :new-connection (lsp-stdio-connection 'lsp-haskell--hie-command)
+     :new-connection (lsp-stdio-connection (lambda () (lsp-haskell--hie-command)))
      :major-modes '(haskell-mode)
      :server-id 'hie
      ;; :multi-root t
