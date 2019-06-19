@@ -37,7 +37,7 @@ The following steps are recommended to bootstrap `lsp-haskell` on OSX.
 ```bash
 git clone https://github.com/haskell/haskell-ide-engine
 cd haskell-ide-engine
-make
+./install.hs build-all
 ```
 
 We need to run `make` here instead of `stack install` to ensure that
@@ -59,7 +59,7 @@ Or of you are on linux (only place it has been tested, reports please)
 ```bash
 git clone https://github.com/haskell/haskell-ide-engine
 cd haskell-ide-engine
-make
+./install.hs build-all
 ```
 
 This will build executables called `hie-8.0.2`, `hie-8.2.2` etc which
