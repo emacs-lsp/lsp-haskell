@@ -1,7 +1,7 @@
 lsp-haskell
 ===========
 
-[![MELPA](https://melpa.org/packages/lsp-haskell-badge.svg)](https://melpa.org/#/lsp-haskell)
+[![MELPA](https://melpa.org/packages/lsp-haskell-badge.svg)](https://melpa.org/#/lsp-haskell) [![Build Status](https://travis-ci.org/emacs-lsp/lsp-haskell.svg?branch=master)](https://travis-ci.org/emacs-lsp/lsp-haskell)
 
 An Emacs Lisp library for interacting with
 a [haskell-ide-engine](https://github.com/haskell/haskell-ide-engine/)
