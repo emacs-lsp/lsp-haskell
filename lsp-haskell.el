@@ -188,7 +188,8 @@ These are assembled from the customizable variables
      :major-modes '(haskell-mode)
      :server-id 'hie
      ;; :multi-root t
-     :initialization-options 'lsp-haskell--make-init-options)))
+     ;; :initialization-options 'lsp-haskell--make-init-options
+     )))
 
 (defun lsp-haskell--hie-command ()
   (funcall lsp-haskell-process-wrapper-function (lsp--haskell-hie-command)))
