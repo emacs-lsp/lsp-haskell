@@ -179,17 +179,18 @@ These are assembled from the customizable variables
    (append (list lsp-haskell-process-path-hie "--lsp") lsp-haskell-process-args-hie) )
 
 ;; ---------------------------------------------------------------------
-;; Supporting the new lsp.el operation, as per
-;; https://github.com/emacs-lsp/lsp-mode/blob/master/README-NEXT.md
 
-(eval-after-load 'lsp '(lsp-register-client
-    (make-lsp--client
-     :new-connection (lsp-stdio-connection (lambda () (lsp-haskell--hie-command)))
-     :major-modes '(haskell-mode)
-     :server-id 'hie
-     ;; :multi-root t
-     ;; :initialization-options 'lsp-haskell--make-init-options
-     )))
+(lsp-register-client
+  (make-lsp--client
+    :new-connection (lsp-stdio-connection (lambda () (lsp-haskell--hie-command)))
+    :major-modes '(haskell-mode)
+    :server-id 'hie
+    :initialized-fn (lambda (workspace)
+                      (with-lsp-workspace workspace
+                        (lsp-haskell--set-configuration)))
+    ;; :multi-root t
+    ;; :initialization-options 'lsp-haskell--make-init-options
+    ))
 
 (defun lsp-haskell--hie-command ()
   (funcall lsp-haskell-process-wrapper-function (lsp--haskell-hie-command)))
@@ -206,8 +207,6 @@ These are assembled from the customizable variables
 
 (defun lsp-haskell--set-configuration ()
   (lsp--set-configuration `(:languageServerHaskell ,lsp-haskell--config-options)))
-
-(add-hook 'lsp-after-initialize-hook 'lsp-haskell--set-configuration)
 
 (defun lsp-haskell-set-config (name option)
   "Set config option NAME to value OPTION in the haskell lsp server."
