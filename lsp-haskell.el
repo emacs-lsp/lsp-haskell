@@ -77,6 +77,11 @@ For example, use the following the start the hie process in a nix-shell:
           (function :tag "Custom function")))
 
 ;; ---------------------------------------------------------------------
+;; Internal variables
+
+(defvar lsp-haskell--config-options (make-hash-table))
+
+;; ---------------------------------------------------------------------
 ;; HaRe functions
 
 (defun lsp-demote ()
@@ -201,10 +206,6 @@ These are assembled from the customizable variables
 (cl-defmethod lsp-initialization-options ((_server (eql hie)))
   "Initialization options for haskell."
   `(:languageServerHaskell ,lsp-haskell--config-options))
-
-;; ---------------------------------------------------------------------
-
-(defvar lsp-haskell--config-options (make-hash-table))
 
 ;; ---------------------------------------------------------------------
 
