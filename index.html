@@ -11,7 +11,7 @@
       
       
       <link rel="shortcut icon" href="images/logo.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.6">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.4b9ffd7b.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.a2408e81.min.css">
       
       
     
@@ -218,15 +218,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hie-installation-osx" class="md-nav__link">
-    Hie Installation (OSX)
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hie-installation-linux" class="md-nav__link">
-    Hie Installation (Linux)
+  <a href="#hie-installation-osx-linux" class="md-nav__link">
+    Hie Installation (OSX, Linux)
   </a>
   
 </li>
@@ -278,15 +271,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hie-installation-osx" class="md-nav__link">
-    Hie Installation (OSX)
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hie-installation-linux" class="md-nav__link">
-    Hie Installation (Linux)
+  <a href="#hie-installation-osx-linux" class="md-nav__link">
+    Hie Installation (OSX, Linux)
   </a>
   
 </li>
@@ -338,31 +324,19 @@ this repository, or install from MELPA. Add the following to your <code>.emacs</
 <p>Note: All three packages are also available via MELPA.</p>
 <p>It needs the HIE server in your path, so follow the appropriate
 OSX or Linux section below accordingly.</p>
-<h2 id="hie-installation-osx">Hie Installation (OSX)<a class="headerlink" href="#hie-installation-osx" title="Permanent link">#</a></h2>
+<h2 id="hie-installation-osx-linux">Hie Installation (OSX, Linux)<a class="headerlink" href="#hie-installation-osx-linux" title="Permanent link">#</a></h2>
 <p>The following steps are recommended to bootstrap <code>lsp-haskell</code> on OSX.</p>
 <div class="highlight"><pre><span></span><code>git clone https://github.com/haskell/haskell-ide-engine
 <span class="nb">cd</span> haskell-ide-engine
-./install.hs build-all
+./install.hs hie
 </code></pre></div>
 
-<p>We need to run <code>make</code> here instead of <code>stack install</code> to ensure that
-all versions of <code>ghc</code> are available to support various project
-requirements.</p>
 <p>After this, we need to instruct Emacs to prefer <code>hie-wrapper</code> over
 <code>hie</code> so Hie can infer which version of ghc we need for a particular
 project.</p>
 <div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">setq</span> <span class="nv">lsp-haskell-process-path-hie</span> <span class="s">&quot;hie-wrapper&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-<h2 id="hie-installation-linux">Hie Installation (Linux)<a class="headerlink" href="#hie-installation-linux" title="Permanent link">#</a></h2>
-<p>Or of you are on linux (only place it has been tested, reports please)</p>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/haskell/haskell-ide-engine
-<span class="nb">cd</span> haskell-ide-engine
-./install.hs build-all
-</code></pre></div>
-
-<p>This will build executables called <code>hie-8.0.2</code>, <code>hie-8.2.2</code> etc which
-can be selected by using<code>M-x customize</code> for <code>lsp-haskell</code></p>
 <h2 id="per-project-configuration">Per project configuration<a class="headerlink" href="#per-project-configuration" title="Permanent link">#</a></h2>
 <p>HIE has some settings that can be changed on the fly.  These are
 exposed via a set of interactive functions.</p>
@@ -394,7 +368,7 @@ for a specific project.</p>
 <div class="md-source-date">
   <small>
     
-      Last update: May 10, 2020
+      Last update: May 26, 2020
     
   </small>
 </div>
@@ -461,15 +435,15 @@ for a specific project.</p>
       
     </div>
     
-      <script src="assets/javascripts/vendor.a0c4167b.min.js"></script>
-      <script src="assets/javascripts/bundle.fb26dd1d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: ".",
           features: [],
           search: Object.assign({
-            worker: "assets/javascripts/worker/search.37585f48.min.js"
+            worker: "assets/javascripts/worker/search.27c6a5e6.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
