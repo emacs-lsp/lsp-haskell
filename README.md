@@ -30,19 +30,15 @@ Note: All three packages are also available via MELPA.
 It needs the HIE server in your path, so follow the appropriate
 OSX or Linux section below accordingly.
 
-## Hie Installation (OSX)
+## Hie Installation (OSX, Linux)
 
 The following steps are recommended to bootstrap `lsp-haskell` on OSX.
 
 ```bash
 git clone https://github.com/haskell/haskell-ide-engine
 cd haskell-ide-engine
-./install.hs build-all
+./install.hs hie
 ```
-
-We need to run `make` here instead of `stack install` to ensure that
-all versions of `ghc` are available to support various project
-requirements.
 
 After this, we need to instruct Emacs to prefer `hie-wrapper` over
 `hie` so Hie can infer which version of ghc we need for a particular
@@ -51,19 +47,6 @@ project.
 ```elisp
 (setq lsp-haskell-process-path-hie "hie-wrapper")
 ```
-
-## Hie Installation (Linux)
-
-Or of you are on linux (only place it has been tested, reports please)
-
-```bash
-git clone https://github.com/haskell/haskell-ide-engine
-cd haskell-ide-engine
-./install.hs build-all
-```
-
-This will build executables called `hie-8.0.2`, `hie-8.2.2` etc which
-can be selected by using`M-x customize` for `lsp-haskell`
 
 ## Per project configuration
 
