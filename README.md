@@ -62,6 +62,9 @@ exposed via a set of interactive functions.
 - `lsp-haskell-set-completion-snippets-on` /
   `lsp-haskell-set-completion-snippets-off` Whether completion should
   return plain text or snippets.
+- `lsp-haskell-set-formatter-brittany` /
+  `lsp-haskell-set-formatter-floskell` /
+  `lsp-haskell-set-formatter-ormolu` Set code formatter.
 
 There are also non-interactive versions that do not actually send the
 settings to the live server, but are suitable for use in `.dir-locals`
@@ -71,3 +74,4 @@ for a specific project.
 - `lsp-haskell-set-max-problems`
 - `lsp-haskell-set-liquid`
 - `lsp-haskell-set-completion-snippets`
+- `lsp-haskell-set-formatter`
