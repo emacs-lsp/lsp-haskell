@@ -22,6 +22,10 @@
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ;; Floor, Boston, MA 02110-1301, USA.
 
+;;; Commentary:
+
+;; Haskell support for lsp-mode
+
 ;;; Code:
 
 (require 'haskell)
@@ -40,7 +44,7 @@
 (defcustom lsp-haskell-process-path-hie
   ;; "hie"
   "hie-wrapper"
-  "The path for starting the haskell-ide-engine
+  "The path for starting the haskell-ide-engine.
 server. hie-wrapper exists on HIE master from 2018-06-10"
   :group 'lsp-haskell
   :type '(choice (const "hie-wrapper")
@@ -63,7 +67,7 @@ For a debug log, use `-d -l /tmp/hie.log'."
 
 For example, use the following the start the hie process in a nix-shell:
 
-(lambda (argv)
+\(lambda (argv)
   (append
    (append (list \"nix-shell\" \"-I\" \".\" \"--command\" )
            (list (mapconcat 'identity argv \" \"))
@@ -76,11 +80,13 @@ For example, use the following the start the hie process in a nix-shell:
           (function-item :tag "None" :value identity)
           (function :tag "Custom function")))
 
+(defvar lsp-haskell--config-options (make-hash-table))
+
 ;; ---------------------------------------------------------------------
 ;; HaRe functions
 
 (defun lsp-demote ()
-  "Demote a function to the level it is used"
+  "Demote a function to the level it is used."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -89,7 +95,7 @@ For example, use the following the start the hie process in a nix-shell:
              :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-duplicate-definition (newname)
-  "Duplicate a definition"
+  "Duplicate NEWNAME definition."
   (interactive "sNew definition name: ")
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -99,7 +105,7 @@ For example, use the following the start the hie process in a nix-shell:
              :text ,newname))))
 
 (defun lsp-if-to-case ()
-  "Convert an if statement to a case statement"
+  "Convert an if statement to a case statement."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -109,7 +115,7 @@ For example, use the following the start the hie process in a nix-shell:
              :end_pos   ,(lsp-get-end-position)))))
 
 (defun lsp-lift-level ()
-  "Lift a function to the top level"
+  "Lift a function to the top level."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -118,7 +124,7 @@ For example, use the following the start the hie process in a nix-shell:
              :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-lift-to-top ()
-  "Lift a function to the top level"
+  "Lift a function to the top level."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -127,7 +133,7 @@ For example, use the following the start the hie process in a nix-shell:
              :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-delete-definition ()
-  "Delete a definition"
+  "Delete a definition."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -136,7 +142,7 @@ For example, use the following the start the hie process in a nix-shell:
              :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-generalise-applicative ()
-  "Generalise a monadic function to use applicative"
+  "Generalise a monadic function to use applicative."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -196,6 +202,7 @@ These are assembled from the customizable variables
     ))
 
 (defun lsp-haskell--hie-command ()
+  "Execute hie command."
   (funcall lsp-haskell-process-wrapper-function (lsp--haskell-hie-command)))
 
 (cl-defmethod lsp-initialization-options ((_server (eql hie)))
@@ -204,11 +211,8 @@ These are assembled from the customizable variables
 
 ;; ---------------------------------------------------------------------
 
-(defvar lsp-haskell--config-options (make-hash-table))
-
-;; ---------------------------------------------------------------------
-
 (defun lsp-haskell--set-configuration ()
+  "Set lsp-haskell configuration."
   (lsp--set-configuration `(:languageServerHaskell ,lsp-haskell--config-options)))
 
 (defun lsp-haskell-set-config (name option)
@@ -226,7 +230,7 @@ These are assembled from the customizable variables
 ;; -------------------------------------
 
 (defun lsp-haskell-set-hlint (val)
-  "Enable(t)/Disable(nil) running hlint."
+  "Enable(t)/Disable(nil) running hlint according to VAL."
   (lsp-haskell-set-config "hlintOn" val))
 
 (defun lsp-haskell-set-hlint-on ()
@@ -256,7 +260,7 @@ These are assembled from the customizable variables
 ;; -------------------------------------
 
 (defun lsp-haskell-set-liquid (val)
-  "Enable(t)/Disable(nil) running liquid haskell on save."
+  "Enable(t)/Disable(nil) according to VAL running liquid haskell on save."
   (lsp-haskell-set-config "liquidOn" val))
 
 (defun lsp-haskell-set-liquid-on ()
@@ -274,7 +278,7 @@ These are assembled from the customizable variables
 ;; -------------------------------------
 
 (defun lsp-haskell-set-completion-snippets (val)
-  "Enable(t)/Disable(nil) providing completion snippets."
+  "Enable(t)/Disable(nil) according to VAL providing completion snippets."
   (lsp-haskell-set-config "completionSnippetsOn" val))
 
 (defun lsp-haskell-set-completion-snippets-on ()
