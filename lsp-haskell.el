@@ -111,8 +111,8 @@ For example, use the following the start the hie process in a nix-shell:
   (lsp--send-execute-command
    "hare:iftocase"
    (vector `(:file      ,(concat "file://" buffer-file-name)
-             :start_pos ,(lsp-get-start-position)
-             :end_pos   ,(lsp-get-end-position)))))
+             :start_pos ,(lsp--region-or-line)
+             :end_pos   ,(lsp--region-or-line)))))
 
 (defun lsp-lift-level ()
   "Lift a function to the top level."
