@@ -80,6 +80,7 @@ For example, use the following the start the hie process in a nix-shell:
 ;; Internal variables
 
 (defvar lsp-haskell--config-options (make-hash-table))
+(defvar lsp-haskell--hls-configuration-id :languageServerHaskell)
 
 ;; ---------------------------------------------------------------------
 ;; HaRe functions
@@ -189,7 +190,24 @@ These are assembled from the customizable variables
 ;; ---------------------------------------------------------------------
 
 (lsp-register-client
-  (make-lsp--client
+ (progn
+   (if (string-match
+        "haskell-language-server-wrapper" lsp-haskell-process-path-hie)
+       (let* ((hls-version-string
+              (shell-command-to-string
+               (combine-and-quote-strings
+                (list lsp-haskell-process-path-hie "--version"))))
+              (hls-version
+               (progn
+                 (string-match
+                  "haskell-language-server version\\: \\([\.[:digit:]]+\\)"
+                  hls-version-string)
+                 (match-string 1 hls-version-string))
+               ))
+         (if (version< hls-version "0.2.2.0")
+             nil
+           (setq lsp-haskell--hls-configuration-id :haskell))))
+   (make-lsp--client
     :new-connection (lsp-stdio-connection (lambda () (lsp-haskell--hie-command)))
     :major-modes '(haskell-mode)
     :server-id 'hie
@@ -198,19 +216,19 @@ These are assembled from the customizable variables
                         (lsp-haskell--set-configuration)))
     ;; :multi-root t
     ;; :initialization-options 'lsp-haskell--make-init-options
-    ))
+    )))
 
 (defun lsp-haskell--hie-command ()
   (funcall lsp-haskell-process-wrapper-function (lsp--haskell-hie-command)))
 
 (cl-defmethod lsp-initialization-options ((_server (eql hie)))
   "Initialization options for haskell."
-  `(:languageServerHaskell ,lsp-haskell--config-options))
+  `(,lsp-haskell--hls-configuration-id ,lsp-haskell--config-options))
 
 ;; ---------------------------------------------------------------------
 
 (defun lsp-haskell--set-configuration ()
-  (lsp--set-configuration `(:languageServerHaskell ,lsp-haskell--config-options)))
+  (lsp--set-configuration `(,lsp-haskell--hls-configuration-id ,lsp-haskell--config-options)))
 
 (defun lsp-haskell-set-config (name option)
   "Set config option NAME to value OPTION in the haskell lsp server."
