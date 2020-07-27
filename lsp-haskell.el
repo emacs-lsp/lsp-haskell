@@ -194,9 +194,9 @@ These are assembled from the customizable variables
    (if (string-match
         "haskell-language-server-wrapper" lsp-haskell-process-path-hie)
        (let* ((hls-version-string
-              (shell-command-to-string
-               (combine-and-quote-strings
-                (list lsp-haskell-process-path-hie "--version"))))
+               (shell-command-to-string
+                (combine-and-quote-strings
+                 (list lsp-haskell-process-path-hie "--version"))))
               (hls-version
                (progn
                  (string-match
