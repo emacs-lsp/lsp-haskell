@@ -317,19 +317,19 @@ These are assembled from the customizable variables
 (defun lsp-haskell-set-formatter-brittany ()
   "Use brittany."
   (interactive)
-  (lsp-haskell-set-formatter :brittany)
+  (lsp-haskell-set-formatter "brittany")
   (lsp-haskell--set-configuration))
 
 (defun lsp-haskell-set-formatter-floskell ()
   "Use floskell."
   (interactive)
-  (lsp-haskell-set-formatter :floskell)
+  (lsp-haskell-set-formatter "floskell")
   (lsp-haskell--set-configuration))
 
 (defun lsp-haskell-set-formatter-ormolu ()
   "Use ormolu."
   (interactive)
-  (lsp-haskell-set-formatter :ormolu)
+  (lsp-haskell-set-formatter "ormolu")
   (lsp-haskell--set-configuration))
 
 ;; ---------------------------------------------------------------------
