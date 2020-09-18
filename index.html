@@ -11,7 +11,7 @@
       
       
       <link rel="shortcut icon" href="images/logo.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.a2408e81.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.4dd2dd8d.min.css">
       
       
     
@@ -44,6 +44,7 @@
   
     <body dir="ltr">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -186,9 +187,7 @@
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
         Home
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
-        </span>
+        <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="." title="Home" class="md-nav__link md-nav__link--active">
@@ -203,9 +202,7 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -218,15 +215,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hie-installation-osx-linux" class="md-nav__link">
-    Hie Installation (OSX, Linux)
+  <a href="#language-server-installation" class="md-nav__link">
+    Language server installation
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#per-project-configuration" class="md-nav__link">
-    Per project configuration
+  <a href="#server-configuration" class="md-nav__link">
+    Server configuration
   </a>
   
 </li>
@@ -256,9 +253,7 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -271,15 +266,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hie-installation-osx-linux" class="md-nav__link">
-    Hie Installation (OSX, Linux)
+  <a href="#language-server-installation" class="md-nav__link">
+    Language server installation
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#per-project-configuration" class="md-nav__link">
-    Per project configuration
+  <a href="#server-configuration" class="md-nav__link">
+    Server configuration
   </a>
   
 </li>
@@ -307,12 +302,11 @@
                 <h1 id="lsp-haskell">lsp-haskell<a class="headerlink" href="#lsp-haskell" title="Permanent link">#</a></h1>
 <p><a href="https://melpa.org/#/lsp-haskell"><img alt="MELPA" src="https://melpa.org/packages/lsp-haskell-badge.svg" /></a> <a href="https://travis-ci.com/emacs-lsp/lsp-haskell"><img alt="Build Status" src="https://travis-ci.com/emacs-lsp/lsp-haskell.svg?branch=master" /></a></p>
 <p>An Emacs Lisp library for interacting with
-a <a href="https://github.com/haskell/haskell-ide-engine/">haskell-ide-engine</a>
-server using Microsoft's
+a Haskell language server such as <a href="https://github.com/haskell/haskell-langauge-server/"><code>haskell-language-server</code></a>
+or <a href="https://github.com/haskell/ghcide/"><code>ghcide</code></a>
+using Microsoft's
 <a href="https://github.com/Microsoft/language-server-protocol/">Language Server Protocol</a>.</p>
-<p>The library is designed to integrate with existing Emacs IDE frameworks
-(completion-at-point, xref (beginning with Emacs 25.1), flycheck, haskell-mode, intero, etc).</p>
-<p><em>This package is still under development, and is not recommended for daily use.</em></p>
+<p>The library acts as a client for <a href="https://github.com/emacs-lsp/lsp-mode"><code>lsp-mode</code></a>.</p>
 <h2 id="emacs-configuration">Emacs Configuration<a class="headerlink" href="#emacs-configuration" title="Permanent link">#</a></h2>
 <p>Install <a href="https://github.com/emacs-lsp/lsp-mode"><code>lsp-mode</code></a> first, and either clone
 this repository, or install from MELPA. Add the following to your <code>.emacs</code>:</p>
@@ -322,48 +316,23 @@ this repository, or install from MELPA. Add the following to your <code>.emacs</
 </code></pre></div>
 
 <p>Note: All three packages are also available via MELPA.</p>
-<p>It needs the HIE server in your path, so follow the appropriate
+<p>It needs the Haskell language server that you plan to use in your path, so follow the appropriate
 OSX or Linux section below accordingly.</p>
-<h2 id="hie-installation-osx-linux">Hie Installation (OSX, Linux)<a class="headerlink" href="#hie-installation-osx-linux" title="Permanent link">#</a></h2>
-<p>The following steps are recommended to bootstrap <code>lsp-haskell</code> on OSX.</p>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/haskell/haskell-ide-engine
-<span class="nb">cd</span> haskell-ide-engine
-./install.hs hie
-</code></pre></div>
-
-<p>After this, we need to instruct Emacs to prefer <code>hie-wrapper</code> over
-<code>hie</code> so Hie can infer which version of ghc we need for a particular
-project.</p>
-<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">setq</span> <span class="nv">lsp-haskell-process-path-hie</span> <span class="s">&quot;hie-wrapper&quot;</span><span class="p">)</span>
-</code></pre></div>
-
-<h2 id="per-project-configuration">Per project configuration<a class="headerlink" href="#per-project-configuration" title="Permanent link">#</a></h2>
-<p>HIE has some settings that can be changed on the fly.  These are
-exposed via a set of interactive functions.</p>
-<ul>
-<li><code>lsp-haskell-set-hlint-on</code> / <code>lsp-haskell-set-hlint-off</code> Turn hlint
-  checks on or off.</li>
-<li><code>lsp-haskell-set-max-number-of-problems</code> Set the maximum number of
-  diagnostics reported.</li>
-<li><code>lsp-haskell-set-liquid-on</code> / <code>lsp-haskell-set-liquid-off</code> Turn
-  liquid haskell checks on save on or off.</li>
-<li><code>lsp-haskell-set-completion-snippets-on</code> /
-  <code>lsp-haskell-set-completion-snippets-off</code> Whether completion should
-  return plain text or snippets.</li>
-<li><code>lsp-haskell-set-formatter-brittany</code> /
-  <code>lsp-haskell-set-formatter-floskell</code> /
-  <code>lsp-haskell-set-formatter-ormolu</code> Set code formatter.</li>
-</ul>
-<p>There are also non-interactive versions that do not actually send the
-settings to the live server, but are suitable for use in <code>.dir-locals</code>
-for a specific project.</p>
-<ul>
-<li><code>lsp-haskell-set-hlint</code></li>
-<li><code>lsp-haskell-set-max-problems</code></li>
-<li><code>lsp-haskell-set-liquid</code></li>
-<li><code>lsp-haskell-set-completion-snippets</code></li>
-<li><code>lsp-haskell-set-formatter</code></li>
-</ul>
+<h2 id="language-server-installation">Language server installation<a class="headerlink" href="#language-server-installation" title="Permanent link">#</a></h2>
+<p>Follow the instructions on the <a href="https://github.com/haskell/haskell-language-server"><code>haskell-language-server</code></a>
+or <a href="https://github.com/haskell/ghcide/"><code>ghcide</code></a> repositories to install your server of choice.</p>
+<p>If you have installed a server other than <code>haskell-language-server</code>, make sure to
+customize the <code>lsp-haskell-server-path</code> variable to point to the executable you
+have installed (see below).</p>
+<h2 id="server-configuration">Server configuration<a class="headerlink" href="#server-configuration" title="Permanent link">#</a></h2>
+<p><code>lsp-haskell</code> exposes a number of configuration options under the <code>lsp-haskell</code> 
+customization group, which should be set like normal customization variables.
+Use <code>M-x customize-group</code> to get started.</p>
+<p>This includes a few options for for setting the server executable
+and arguments, and numerous settings for configuring the server itself (<code>hlint</code>,
+choice of formatting provider, etc.).</p>
+<p>Note that server configuration settings will currently <a href="https://github.com/emacs-lsp/lsp-mode/issues/1174">not</a> 
+be applied until the server is restarted.</p>
                 
                   
                     
@@ -372,7 +341,7 @@ for a specific project.</p>
 <div class="md-source-date">
   <small>
     
-      Last update: May 27, 2020
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 18, 2020</span>
     
   </small>
 </div>
@@ -439,15 +408,15 @@ for a specific project.</p>
       
     </div>
     
-      <script src="assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="assets/javascripts/vendor.3636a4ec.min.js"></script>
+      <script src="assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: ".",
           features: [],
           search: Object.assign({
-            worker: "assets/javascripts/worker/search.27c6a5e6.min.js"
+            worker: "assets/javascripts/worker/search.5eca75d3.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
