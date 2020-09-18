@@ -31,38 +31,79 @@
 ;; ---------------------------------------------------------------------
 ;; Configuration
 
-;;;###autoload
 (defgroup lsp-haskell nil
   "Customization group for ‘lsp-haskell’."
   :group 'lsp-mode)
 
-;;;###autoload
-(defcustom lsp-haskell-process-path-hie
-  ;; "hie"
-  "hie-wrapper"
-  "The path for starting the haskell-ide-engine
-server. hie-wrapper exists on HIE master from 2018-06-10"
-  :group 'lsp-haskell
-  :type '(choice (const "hie-wrapper")
-                 (const "haskell-language-server-wrapper")
-                 (const "ghcide")
-                 string))
+;; ---------------------------------------------------------------------
+;; Language server options
 
-;;;###autoload
-(defcustom lsp-haskell-process-args-hie
-  '("-d" "-l" "/tmp/hie.log")
-  "The arguments for starting the haskell-ide-engine server.
-For a debug log, use `-d -l /tmp/hie.log'."
+;; These are registered with lsp-mode below, which handles preparing them for the server.
+;; Originally generated from the vscode extension's package.json using lsp-generate-bindings.
+;; Should ideally stay in sync with what's offered in the vscode extension.
+
+(defcustom lsp-haskell-hlint-on
+  t
+  "Get suggestions from hlint."
+  :group 'lsp-haskell
+  :type 'boolean)
+(defcustom lsp-haskell-max-number-of-problems
+  100
+  "Controls the maximum number of problems produced by the server."
+  :group 'lsp-haskell
+  :type 'number)
+(defcustom
+  lsp-haskell-diagnostics-on-change
+  t
+  "Compute diagnostics continuously as you type. Turn off to only generate diagnostics on file save."
+  :group 'lsp-haskell
+  :type 'boolean)
+(defcustom lsp-haskell-liquid-on
+  nil
+  "Get diagnostics from liquid haskell."
+  :group 'lsp-haskell
+  :type 'boolean)
+(defcustom lsp-haskell-completion-snippets-on
+  t
+  "Show snippets with type information when using code completion."
+  :group 'lsp-haskell
+  :type 'boolean)
+(defcustom lsp-haskell-format-on-import-on
+  t
+  "When adding an import, use the formatter on the result."
+  :group 'lsp-haskell
+  :type 'boolean)
+(defcustom lsp-haskell-formatting-provider
+  "ormolu" 
+  "The formatter to use when formatting a document or range."
+  :group 'lsp-haskell
+  :type '(choice (const :tag "brittany" "brittany") 
+                 (const :tag "floskell" "floskell") 
+                 (const :tag "fourmolu" "fourmolu") 
+                 (const :tag "ormolu" "ormolu") 
+                 (const :tag "stylish-haskell" "stylish-haskell") 
+                 (const :tag "none" "none")))
+
+;; ---------------------------------------------------------------------
+;; Non-language server options
+
+(defcustom lsp-haskell-server-path
+  "haskell-language-server"
+  "The language server executable. Can be something on the $PATH (e.g. 'ghcide') or a path to an executable itself."
+  :group 'lsp-haskell
+  :type 'string)
+
+(defcustom lsp-haskell-server-args
+  '("-d" "-l" "/tmp/hls.log")
+  "The arguments for starting the language server.
+For a debug log when using haskell-language-server, use `-d -l /tmp/hls.log'."
   :group 'lsp-haskell
   :type '(repeat (string :tag "Argument")))
 
-;;;###autoload
-(defcustom lsp-haskell-process-wrapper-function
+(defcustom lsp-haskell-server-wrapper-function
   #'identity
-  "Use this to wrap the haskell-ide-engine process started by lsp-haskell.
-
-For example, use the following the start the hie process in a nix-shell:
-
+  "Use this to wrap the language server process started by lsp-haskell.
+For example, use the following the start the process in a nix-shell:
 (lambda (argv)
   (append
    (append (list \"nix-shell\" \"-I\" \".\" \"--command\" )
@@ -75,11 +116,6 @@ For example, use the following the start the hie process in a nix-shell:
   :type '(choice
           (function-item :tag "None" :value identity)
           (function :tag "Custom function")))
-
-;; ---------------------------------------------------------------------
-;; Internal variables
-
-(defvar lsp-haskell--config-options (make-hash-table))
 
 ;; ---------------------------------------------------------------------
 ;; HaRe functions
@@ -150,6 +186,7 @@ For example, use the following the start the hie process in a nix-shell:
              :pos  ,(lsp-point-to-position (point))))))
 
 ;; ---------------------------------------------------------------------
+;; Miscellaneous useful functions
 
 (defun lsp-haskell--session-cabal-dir ()
   "Get the session cabal-dir."
@@ -176,143 +213,41 @@ if projectile way fails"
         dir))))
 
 ;; ---------------------------------------------------------------------
+;; Starting the server and registration with lsp-mode
 
-(defun lsp--haskell-hie-command ()
-  "Comamnd and arguments for launching the inferior hie process.
-These are assembled from the customizable variables
- `lsp-haskell-process-path-hie' and
- `lsp-haskell-process-args-hie'. If the hie executable is
- installed via its Makefile, there will be compiler-specific
- versions with names like 'hie-8.0.2' or 'hie-8.2.2'."
-   (append (list lsp-haskell-process-path-hie "--lsp") lsp-haskell-process-args-hie) )
+(defun lsp-haskell--server-command ()
+  "Command and arguments for launching the inferior language server process.
+These are assembled from the customizable variables `lsp-haskell-server-path'
+and `lsp-haskell-server-args'."
+  (append (list lsp-haskell-server-path "--lsp") lsp-haskell-server-args) )
 
-;; ---------------------------------------------------------------------
+;; Register all the language server settings with lsp-mode.
+;; Note that customizing these will currently *not* send the updated configuration to the server, 
+;; users must manually restart. See https://github.com/emacs-lsp/lsp-mode/issues/1174.
+(lsp-register-custom-settings '(
+                                ("haskell.formattingProvider" lsp-haskell-formatting-provider)
+                                ("haskell.formatOnImportOn" lsp-haskell-format-on-import-on t)
+                                ("haskell.completionSnippetsOn" lsp-haskell-completion-snippets-on t)
+                                ("haskell.liquidOn" lsp-haskell-liquid-on t)
+                                ("haskell.diagnosticsOnChange" lsp-haskell-diagnostics-on-change t)
+                                ("haskell.maxNumberOfProblems" lsp-haskell-max-number-of-problems)
+                                ("haskell.hlintOn" lsp-haskell-hlint-on t)))
 
+;; Register the client itself
 (lsp-register-client
   (make-lsp--client
-    :new-connection (lsp-stdio-connection (lambda () (lsp-haskell--hie-command)))
+    :new-connection (lsp-stdio-connection (lambda () (lsp-haskell--server-command)))
     :major-modes '(haskell-mode)
-    :server-id 'hie
+    ;; This is arbitrary.
+    :server-id 'lsp-haskell
+    ;; We need to manually pull out the configuration section and set it. Possibly in
+    ;; the future lsp-mode will asssociate servers with configuration sections more directly.
     :initialized-fn (lambda (workspace)
                       (with-lsp-workspace workspace
-                        (lsp-haskell--set-configuration)))
-    ;; :multi-root t
-    ;; :initialization-options 'lsp-haskell--make-init-options
+                        (lsp--set-configuration (lsp-configuration-section "haskell"))))
+    ;; No need to set :language-id, since there isn't one for Haskell and we
+    ;; don't support multiple languages
     ))
-
-(defun lsp-haskell--hie-command ()
-  (funcall lsp-haskell-process-wrapper-function (lsp--haskell-hie-command)))
-
-(cl-defmethod lsp-initialization-options ((_server (eql hie)))
-  "Initialization options for haskell."
-  `(:languageServerHaskell ,lsp-haskell--config-options))
-
-;; ---------------------------------------------------------------------
-
-(defun lsp-haskell--set-configuration ()
-  (lsp--set-configuration `(:languageServerHaskell ,lsp-haskell--config-options)))
-
-(defun lsp-haskell-set-config (name option)
-  "Set config option NAME to value OPTION in the haskell lsp server."
-  (puthash name option lsp-haskell--config-options))
-
-  ;; parseJSON = withObject "Config" $ \v -> do
-  ;;   s <- v .: "languageServerHaskell"
-  ;;   flip (withObject "Config.settings") s $ \o -> Config
-  ;;     <$> o .:? "hlintOn"              .!= True
-  ;;     <*> o .:? "maxNumberOfProblems"  .!= 100
-  ;;     <*> o .:? "liquidOn"             .!= False
-  ;;     <*> o .:? "completionSnippetsOn" .!= True
-
-;; -------------------------------------
-
-(defun lsp-haskell-set-hlint (val)
-  "Enable(t)/Disable(nil) running hlint."
-  (lsp-haskell-set-config "hlintOn" val))
-
-(defun lsp-haskell-set-hlint-on ()
-  "Enable running hlint haskell."
-  (interactive)
-  (lsp-haskell-set-hlint t)
-  (lsp-haskell--set-configuration))
-
-(defun lsp-haskell-set-hlint-off ()
-  "Disable running hlint."
-  (interactive)
-  (lsp-haskell-set-hlint :json-false)
-  (lsp-haskell--set-configuration))
-
-;; -------------------------------------
-
-(defun lsp-haskell-set-max-problems (val)
-  "Set maximum number of problems reported to VAL."
-  (lsp-haskell-set-config "maxNumberOfProblems" val))
-
-(defun lsp-haskell-set-max-number-of-problems (val)
-  "Set maximum number of problems reported to VAL."
-  (interactive "nMax number of problems to report: ")
-  (lsp-haskell-set-max-problems val)
-  (lsp-haskell--set-configuration))
-
-;; -------------------------------------
-
-(defun lsp-haskell-set-liquid (val)
-  "Enable(t)/Disable(nil) running liquid haskell on save."
-  (lsp-haskell-set-config "liquidOn" val))
-
-(defun lsp-haskell-set-liquid-on ()
-  "Enable running liquid haskell on save."
-  (interactive)
-  (lsp-haskell-set-liquid t)
-  (lsp-haskell--set-configuration))
-
-(defun lsp-haskell-set-liquid-off ()
-  "Disable running liquid haskell on save."
-  (interactive)
-  (lsp-haskell-set-liquid :json-false)
-  (lsp-haskell--set-configuration))
-
-;; -------------------------------------
-
-(defun lsp-haskell-set-completion-snippets (val)
-  "Enable(t)/Disable(nil) providing completion snippets."
-  (lsp-haskell-set-config "completionSnippetsOn" val))
-
-(defun lsp-haskell-set-completion-snippets-on ()
-  "Enable providing completion snippets."
-  (interactive)
-  (lsp-haskell-set-completion-snippets t)
-  (lsp-haskell--set-configuration))
-
-(defun lsp-haskell-set-completion-snippets-off ()
-  "Disable providing completion snippets."
-  (interactive)
-  (lsp-haskell-set-completion-snippets :json-false)
-  (lsp-haskell--set-configuration))
-
-;; -------------------------------------
-
-(defun lsp-haskell-set-formatter (val)
-  "Set code formatter."
-  (lsp-haskell-set-config "formattingProvider" val))
-
-(defun lsp-haskell-set-formatter-brittany ()
-  "Use brittany."
-  (interactive)
-  (lsp-haskell-set-formatter :brittany)
-  (lsp-haskell--set-configuration))
-
-(defun lsp-haskell-set-formatter-floskell ()
-  "Use floskell."
-  (interactive)
-  (lsp-haskell-set-formatter :floskell)
-  (lsp-haskell--set-configuration))
-
-(defun lsp-haskell-set-formatter-ormolu ()
-  "Use ormolu."
-  (interactive)
-  (lsp-haskell-set-formatter :ormolu)
-  (lsp-haskell--set-configuration))
 
 ;; ---------------------------------------------------------------------
 

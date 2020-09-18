@@ -4,15 +4,12 @@ lsp-haskell
 [![MELPA](https://melpa.org/packages/lsp-haskell-badge.svg)](https://melpa.org/#/lsp-haskell) [![Build Status](https://travis-ci.com/emacs-lsp/lsp-haskell.svg?branch=master)](https://travis-ci.com/emacs-lsp/lsp-haskell)
 
 An Emacs Lisp library for interacting with
-a [haskell-ide-engine](https://github.com/haskell/haskell-ide-engine/)
-server using Microsoft's
+a Haskell language server such as [`haskell-language-server`](https://github.com/haskell/haskell-langauge-server/)
+or [`ghcide`](https://github.com/haskell/ghcide/)
+using Microsoft's
 [Language Server Protocol](https://github.com/Microsoft/language-server-protocol/).
 
-The library is designed to integrate with existing Emacs IDE frameworks
-(completion-at-point, xref (beginning with Emacs 25.1), flycheck, haskell-mode, intero, etc).
-
-
-*This package is still under development, and is not recommended for daily use.*
+The library acts as a client for [`lsp-mode`](https://github.com/emacs-lsp/lsp-mode).
 
 ## Emacs Configuration
 
@@ -27,51 +24,27 @@ this repository, or install from MELPA. Add the following to your `.emacs`:
 
 Note: All three packages are also available via MELPA.
 
-It needs the HIE server in your path, so follow the appropriate
+It needs the Haskell language server that you plan to use in your path, so follow the appropriate
 OSX or Linux section below accordingly.
 
-## Hie Installation (OSX, Linux)
+## Language server installation
 
-The following steps are recommended to bootstrap `lsp-haskell` on OSX.
+Follow the instructions on the [`haskell-language-server`](https://github.com/haskell/haskell-language-server)
+or [`ghcide`](https://github.com/haskell/ghcide/) repositories to install your server of choice.
 
-```bash
-git clone https://github.com/haskell/haskell-ide-engine
-cd haskell-ide-engine
-./install.hs hie
-```
+If you have installed a server other than `haskell-language-server`, make sure to
+customize the `lsp-haskell-server-path` variable to point to the executable you
+have installed (see below).
 
-After this, we need to instruct Emacs to prefer `hie-wrapper` over
-`hie` so Hie can infer which version of ghc we need for a particular
-project.
+## Server configuration
 
-```elisp
-(setq lsp-haskell-process-path-hie "hie-wrapper")
-```
+`lsp-haskell` exposes a number of configuration options under the `lsp-haskell` 
+customization group, which should be set like normal customization variables.
+Use `M-x customize-group` to get started.
 
-## Per project configuration
+This includes a few options for for setting the server executable
+and arguments, and numerous settings for configuring the server itself (`hlint`,
+choice of formatting provider, etc.).
 
-HIE has some settings that can be changed on the fly.  These are
-exposed via a set of interactive functions.
-
-- `lsp-haskell-set-hlint-on` / `lsp-haskell-set-hlint-off` Turn hlint
-  checks on or off.
-- `lsp-haskell-set-max-number-of-problems` Set the maximum number of
-  diagnostics reported.
-- `lsp-haskell-set-liquid-on` / `lsp-haskell-set-liquid-off` Turn
-  liquid haskell checks on save on or off.
-- `lsp-haskell-set-completion-snippets-on` /
-  `lsp-haskell-set-completion-snippets-off` Whether completion should
-  return plain text or snippets.
-- `lsp-haskell-set-formatter-brittany` /
-  `lsp-haskell-set-formatter-floskell` /
-  `lsp-haskell-set-formatter-ormolu` Set code formatter.
-
-There are also non-interactive versions that do not actually send the
-settings to the live server, but are suitable for use in `.dir-locals`
-for a specific project.
-
-- `lsp-haskell-set-hlint`
-- `lsp-haskell-set-max-problems`
-- `lsp-haskell-set-liquid`
-- `lsp-haskell-set-completion-snippets`
-- `lsp-haskell-set-formatter`
+Note that server configuration settings will currently [not](https://github.com/emacs-lsp/lsp-mode/issues/1174) 
+be applied until the server is restarted.
