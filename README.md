@@ -19,7 +19,9 @@ this repository, or install from MELPA. Add the following to your `.emacs`:
 ```emacs-lisp
 (require 'lsp)
 (require 'lsp-haskell)
+;; Hooks so haskell and literate haskell major modes trigger LSP setup
 (add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'haskell-literate-mode-hook #'lsp)
 ```
 
 Note: All three packages are also available via MELPA.
