@@ -4,7 +4,7 @@ lsp-haskell
 [![MELPA](https://melpa.org/packages/lsp-haskell-badge.svg)](https://melpa.org/#/lsp-haskell) [![Build Status](https://travis-ci.com/emacs-lsp/lsp-haskell.svg?branch=master)](https://travis-ci.com/emacs-lsp/lsp-haskell)
 
 An Emacs Lisp library for interacting with
-a Haskell language server such as [`haskell-language-server`](https://github.com/haskell/haskell-langauge-server/)
+a Haskell language server such as [`haskell-language-server`](https://github.com/haskell/haskell-language-server/)
 or [`ghcide`](https://github.com/haskell/ghcide/)
 using Microsoft's
 [Language Server Protocol](https://github.com/Microsoft/language-server-protocol/).
