@@ -313,7 +313,9 @@ using Microsoft's
 this repository, or install from MELPA. Add the following to your <code>.emacs</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;lsp</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;lsp-haskell</span><span class="p">)</span>
+<span class="c1">;; Hooks so haskell and literate haskell major modes trigger LSP setup</span>
 <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;haskell-mode-hook</span> <span class="nf">#&#39;</span><span class="nv">lsp</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;haskell-literate-mode-hook</span> <span class="nf">#&#39;</span><span class="nv">lsp</span><span class="p">)</span>
 </code></pre></div>
 
 <p>Note: All three packages are also available via MELPA.</p>
