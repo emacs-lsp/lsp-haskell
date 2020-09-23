@@ -88,7 +88,7 @@
 ;; Non-language server options
 
 (defcustom lsp-haskell-server-path
-  "haskell-language-server"
+  "haskell-language-server-wrapper"
   "The language server executable. Can be something on the $PATH (e.g. 'ghcide') or a path to an executable itself."
   :group 'lsp-haskell
   :type 'string)
