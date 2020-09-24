@@ -93,8 +93,15 @@
   :group 'lsp-haskell
   :type 'string)
 
+(defcustom lsp-haskell-server-log-file
+  (expand-file-name "hls.log" temporary-file-directory)
+  "The log file used by the server. Note that this is passed to the server via 'lsp-haskell-server-args', so if
+you override that setting then this one will have no effect."
+  :group 'lsp-haskell
+  :type 'string)
+
 (defcustom lsp-haskell-server-args
-  '("-d" "-l" "/tmp/hls.log")
+  `("-d" "-l" ,lsp-haskell-server-log-file)
   "The arguments for starting the language server.
 For a debug log when using haskell-language-server, use `-d -l /tmp/hls.log'."
   :group 'lsp-haskell
