@@ -225,8 +225,8 @@ if projectile way fails"
 (defun lsp-haskell--server-command ()
   "Command and arguments for launching the inferior language server process.
 These are assembled from the customizable variables `lsp-haskell-server-path'
-and `lsp-haskell-server-args'."
-  (append (list lsp-haskell-server-path "--lsp") lsp-haskell-server-args) )
+and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
+  (funcall lsp-haskell-server-wrapper-function (append (list lsp-haskell-server-path "--lsp") lsp-haskell-server-args) ))
 
 ;; Register all the language server settings with lsp-mode.
 ;; Note that customizing these will currently *not* send the updated configuration to the server, 
