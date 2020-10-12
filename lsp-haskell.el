@@ -110,13 +110,13 @@ For a debug log when using haskell-language-server, use `-d -l /tmp/hls.log'."
 (defcustom lsp-haskell-server-wrapper-function
   #'identity
   "Use this to wrap the language server process started by lsp-haskell.
-For example, use the following the start the process in a nix-shell:
+For example, use the following the start the process in a nix-shell (requires nix-sandbox package):
 (lambda (argv)
   (append
    (append (list \"nix-shell\" \"-I\" \".\" \"--command\" )
            (list (mapconcat 'identity argv \" \"))
            )
-   (list (concat (lsp-haskell--get-root) \"/shell.nix\"))
+   (list (nix-current-sandbox))
    )
   )"
   :group 'lsp-haskell
