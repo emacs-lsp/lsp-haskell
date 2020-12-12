@@ -328,6 +328,8 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
 				:store-path binary-store-path
 				:decompress :gzip)))
 			   error-callback))
+    ;; This is required for completions to works inside language pragma statements
+    :completion-in-comments? t
     ))
 
 ;; ---------------------------------------------------------------------
