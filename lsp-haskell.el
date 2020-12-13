@@ -1,7 +1,7 @@
-;;; lsp-haskell.el --- Haskell support for lsp-mode
+;;; lsp-haskell.el --- Haskell support for lsp-mode -*- lexical-binding: t; -*-
 
 ;; Version: 1.0
-;; Package-Requires: ((lsp-mode "3.0") (haskell-mode "1.0"))
+;; Package-Requires: ((lsp-mode "7.0") (haskell-mode "1.0"))
 ;; Keywords: haskell
 ;; URL: https://github.com/emacs-lsp/lsp-haskell
 
@@ -74,14 +74,14 @@
   :group 'lsp-haskell
   :type 'boolean)
 (defcustom lsp-haskell-formatting-provider
-  "ormolu" 
+  "ormolu"
   "The formatter to use when formatting a document or range."
   :group 'lsp-haskell
-  :type '(choice (const :tag "brittany" "brittany") 
-                 (const :tag "floskell" "floskell") 
-                 (const :tag "fourmolu" "fourmolu") 
-                 (const :tag "ormolu" "ormolu") 
-                 (const :tag "stylish-haskell" "stylish-haskell") 
+  :type '(choice (const :tag "brittany" "brittany")
+                 (const :tag "floskell" "floskell")
+                 (const :tag "fourmolu" "fourmolu")
+                 (const :tag "ormolu" "ormolu")
+                 (const :tag "stylish-haskell" "stylish-haskell")
                  (const :tag "none" "none")))
 
 ;; ---------------------------------------------------------------------
@@ -229,7 +229,7 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
   (funcall lsp-haskell-server-wrapper-function (append (list lsp-haskell-server-path "--lsp") lsp-haskell-server-args) ))
 
 ;; Register all the language server settings with lsp-mode.
-;; Note that customizing these will currently *not* send the updated configuration to the server, 
+;; Note that customizing these will currently *not* send the updated configuration to the server,
 ;; users must manually restart. See https://github.com/emacs-lsp/lsp-mode/issues/1174.
 (lsp-register-custom-settings '(
                                 ("haskell.formattingProvider" lsp-haskell-formatting-provider)
@@ -246,15 +246,58 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
 ;; https://microsoft.github.io/language-server-protocol/specification#textDocumentItem
 (add-to-list 'lsp-language-id-configuration '(haskell-literate-mode . "haskell"))
 
+(defun lsp-haskell--github-system-type-suffix ()
+  (pcase system-type
+    ('gnu/linux "Linux")
+    ('windows-nt "Windows")
+    ('darwin "macOS")))
+
+(defcustom lsp-haskell-language-server-github-releases-url
+  "https://github.com/haskell/haskell-language-server/releases/latest/download/"
+  "GitHub releases url for haskell-language-server and its binaries. Make sure to include the trailing directory slash."
+  :type 'string
+  :group 'lsp-haskell
+  :package-version '(lsp-haskell . "1.0"))
+
+(lsp-dependency
+ 'haskell-language-server-wrapper
+ '(:system "haskell-language-server-wrapper")
+ `(:download :url ,(concat lsp-haskell-language-server-github-releases-url
+			  (format "haskell-language-server-wrapper-%s.gz"
+				  (lsp-haskell--github-system-type-suffix)))
+	     :store-path ,(f-join lsp-server-install-dir "haskell" "haskell-language-server-wrapper")
+	     :decompress :gzip
+	     :set-executable? t))
+
+(defun lsp-haskell--project-ghc-version ()
+  (let ((wrapper-exe (lsp-package-path 'haskell-language-server-wrapper)))
+    (if wrapper-exe
+      (s-trim
+       (shell-command-to-string
+	(format "%s --project-ghc-version 2>/dev/null" wrapper-exe)))
+      nil)))
+
 ;; Register the client itself
 (lsp-register-client
   (make-lsp--client
-    :new-connection (lsp-stdio-connection (lambda () (lsp-haskell--server-command)))
+   :new-connection (lsp-stdio-connection
+		    (lambda ()
+		      (let* ((proj-ghc-ver (lsp-haskell--project-ghc-version))
+			     (server-name (format "haskell-language-server-%s" proj-ghc-ver))
+			     (path-exe (executable-find server-name))
+			     (downloaded-exe
+			      (lsp-download-path
+			       :store-path (f-join lsp-server-install-dir "haskell" server-name)
+			       :set-executable? t)))
+			(lsp--info "Project GHC version is %s" proj-ghc-ver)
+			(if path-exe
+			    (list path-exe "--lsp")
+			  (list downloaded-exe "--lsp")))))
+
     ;; Should run under haskell-mode and haskell-literate-mode. We need to list the
     ;; latter even though it's a derived mode of the former
     :major-modes '(haskell-mode haskell-literate-mode)
-    ;; This is arbitrary.
-    :server-id 'lsp-haskell
+    :server-id 'haskell-language-server
     ;; We need to manually pull out the configuration section and set it. Possibly in
     ;; the future lsp-mode will asssociate servers with configuration sections more directly.
     :initialized-fn (lambda (workspace)
@@ -263,6 +306,26 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
     ;; This is somewhat irrelevant, but it is listed in lsp-language-id-configuration, so
     ;; we should set something consistent here.
     :language-id "haskell"
+    :download-server-fn (lambda (_client callback error-callback _update?)
+			  (lsp-package-ensure
+			   'haskell-language-server-wrapper
+			   (lambda ()
+			     (let*
+				 ((proj-ghc-ver (lsp-haskell--project-ghc-version))
+				  (binary-store-path
+				   (f-join lsp-server-install-dir "haskell" (format "haskell-language-server-%s" proj-ghc-ver))))
+			       (lsp-download-install
+				callback
+				error-callback
+				:url (concat
+				      lsp-haskell-language-server-github-releases-url
+				      (format
+				       "haskell-language-server-%s-%s.gz"
+				       (lsp-haskell--github-system-type-suffix)
+				       proj-ghc-ver))
+				:store-path binary-store-path
+				:decompress :gzip)))
+			   error-callback))
     ;; This is required for completions to works inside language pragma statements
     :completion-in-comments? t
     ))
