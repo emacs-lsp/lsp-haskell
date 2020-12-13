@@ -257,7 +257,7 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
   "GitHub releases url for haskell-language-server and its binaries. Make sure to include the trailing directory slash."
   :type 'string
   :group 'lsp-haskell
-  :package-version '(lsp-mode . "7.1"))
+  :package-version '(lsp-haskell . "1.0"))
 
 (lsp-dependency
  'haskell-language-server-wrapper
@@ -270,9 +270,7 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
 	     :set-executable? t))
 
 (defun lsp-haskell--project-ghc-version ()
-  (let* ((path-exe (executable-find "haskell-language-server-wrapper"))
-	 (downloaded-exe (lsp-package-path 'haskell-language-server-wrapper))
-	 (wrapper-exe (if path-exe path-exe downloaded-exe)))
+  (let ((wrapper-exe (lsp-package-path 'haskell-language-server-wrapper)))
     (if wrapper-exe
       (s-trim
        (shell-command-to-string
