@@ -74,15 +74,87 @@
   :group 'lsp-haskell
   :type 'boolean)
 (defcustom lsp-haskell-formatting-provider
-  "ormolu" 
+  "ormolu"
   "The formatter to use when formatting a document or range."
   :group 'lsp-haskell
-  :type '(choice (const :tag "brittany" "brittany") 
-                 (const :tag "floskell" "floskell") 
-                 (const :tag "fourmolu" "fourmolu") 
-                 (const :tag "ormolu" "ormolu") 
-                 (const :tag "stylish-haskell" "stylish-haskell") 
+  :type '(choice (const :tag "brittany" "brittany")
+                 (const :tag "floskell" "floskell")
+                 (const :tag "fourmolu" "fourmolu")
+                 (const :tag "ormolu" "ormolu")
+                 (const :tag "stylish-haskell" "stylish-haskell")
                  (const :tag "none" "none")))
+
+;; ---------------------------------------------------------------------
+;; Plugin-specific configuration
+(defgroup lsp-haskell-plugins nil
+  "Customization group for 'lsp-haskell' plugins."
+  :group 'lsp-haskell)
+
+(defcustom lsp-haskell-ghcide-on
+  t
+  "Turn on the ghcide plugins."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-pragmas-on
+  t
+  "Turn on the pragmas plugin."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-floskell-on
+  t
+  "Turn on the floskell plugin."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-fourmolu-on
+  t
+  "Turn on the fourmolu plugin."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-ormolu-on
+  t
+  "Turn on the ormolu plugin."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-stylish-haskell-on
+  t
+  "Turn on the stylish-haskell plugin."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-brittany-on
+  t
+  "Turn on the brittany plugin."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-tactic-on
+  t
+  "Turn on the tactic plugin."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-retrie-on
+  t
+  "Turn on the retrie plugin."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-eval-on
+  t
+  "Turn on the eval plugin."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-importlens-on
+  t
+  "Turn on the explicit import lens."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-modulename-on
+  t
+  "Turn on the moduleName plugin."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-hlint-on
+  t
+  "Turn on the hlint plugin."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
 
 ;; ---------------------------------------------------------------------
 ;; Non-language server options
@@ -238,7 +310,23 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
                                 ("haskell.liquidOn" lsp-haskell-liquid-on t)
                                 ("haskell.diagnosticsOnChange" lsp-haskell-diagnostics-on-change t)
                                 ("haskell.maxNumberOfProblems" lsp-haskell-max-number-of-problems)
-                                ("haskell.hlintOn" lsp-haskell-hlint-on t)))
+                                ("haskell.hlintOn" lsp-haskell-hlint-on t)
+
+                                ("haskell.plugin.ghcide.globalOn"          lsp-haskell-ghcide-on t)
+                                ("haskell.plugin.pragmas.globalOn"         lsp-haskell-pragmas-on t)
+                                ("haskell.plugin.floskell.globalOn"        lsp-haskell-floskell-on t)
+                                ("haskell.plugin.fourmolu.globalOn"        lsp-haskell-fourmolu-on t)
+                                ("haskell.plugin.ormolu.globalOn"          lsp-haskell-ormolu-on t)
+                                ("haskell.plugin.stylish-haskell.globalOn" lsp-haskell-stylish-haskell-on t)
+                                ("haskell.plugin.brittany.globalOn"        lsp-haskell-brittany-on t)
+                                ("haskell.plugin.tactic.globalOn"          lsp-haskell-tactic-on t)
+                                ("haskell.plugin.retrie.globalOn"          lsp-haskell-retrie-on t)
+                                ("haskell.plugin.eval.globalOn"            lsp-haskell-eval-on t)
+                                ("haskell.plugin.importLens.globalOn"      lsp-haskell-importlens-on t)
+                                ("haskell.plugin.moduleName.globalOn"      lsp-haskell-modulename-on t)
+                                ("haskell.plugin.hlint.globalOn"           lsp-haskell-hlint-on t)
+
+                                ))
 
 ;; This mapping is set for 'haskell-mode -> haskell' in the lsp-mode repo itself. If we move
 ;; it there, then delete it from here.
