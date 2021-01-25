@@ -301,7 +301,7 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
   (funcall lsp-haskell-server-wrapper-function (append (list lsp-haskell-server-path "--lsp") lsp-haskell-server-args) ))
 
 ;; Register all the language server settings with lsp-mode.
-;; Note that customizing these will currently *not* send the updated configuration to the server, 
+;; Note that customizing these will currently *not* send the updated configuration to the server,
 ;; users must manually restart. See https://github.com/emacs-lsp/lsp-mode/issues/1174.
 (lsp-register-custom-settings '(
                                 ("haskell.formattingProvider" lsp-haskell-formatting-provider)
