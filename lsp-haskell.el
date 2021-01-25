@@ -56,10 +56,10 @@
   "Controls the maximum number of problems produced by the server."
   :group 'lsp-haskell
   :type 'number)
-(defcustom
-  lsp-haskell-diagnostics-on-change
+(defcustom lsp-haskell-diagnostics-on-change
   t
-  "Compute diagnostics continuously as you type. Turn off to only generate diagnostics on file save."
+  "Compute diagnostics continuously as you type.
+Turn off to only generate diagnostics on file save."
   :group 'lsp-haskell
   :type 'boolean)
 (defcustom lsp-haskell-liquid-on
@@ -165,13 +165,15 @@
 
 (defcustom lsp-haskell-server-path
   "haskell-language-server-wrapper"
-  "The language server executable. Can be something on the $PATH (e.g. 'ghcide') or a path to an executable itself."
+  "The language server executable.
+Can be something on the $PATH (e.g. 'ghcide') or a path to an executable itself."
   :group 'lsp-haskell
   :type 'string)
 
 (defcustom lsp-haskell-server-log-file
   (expand-file-name "hls.log" temporary-file-directory)
-  "The log file used by the server. Note that this is passed to the server via 'lsp-haskell-server-args', so if
+  "The log file used by the server.
+Note that this is passed to the server via 'lsp-haskell-server-args', so if
 you override that setting then this one will have no effect."
   :group 'lsp-haskell
   :type 'string)
@@ -187,7 +189,7 @@ For a debug log when using haskell-language-server, use `-d -l /tmp/hls.log'."
   #'identity
   "Use this to wrap the language server process started by lsp-haskell.
 For example, use the following the start the process in a nix-shell:
-(lambda (argv)
+\(lambda (argv)
   (append
    (append (list \"nix-shell\" \"-I\" \".\" \"--command\" )
            (list (mapconcat 'identity argv \" \"))
@@ -204,7 +206,7 @@ For example, use the following the start the process in a nix-shell:
 ;; HaRe functions
 
 (defun lsp-demote ()
-  "Demote a function to the level it is used"
+  "Demote a function to the level it is used."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -213,7 +215,7 @@ For example, use the following the start the process in a nix-shell:
              :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-duplicate-definition (newname)
-  "Duplicate a definition"
+  "Duplicate a definition."
   (interactive "sNew definition name: ")
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
