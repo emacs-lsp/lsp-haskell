@@ -274,9 +274,8 @@ For example, use the following the start the process in a nix-shell:
                         (file-name-directory cabal-file)
                       "." ;; no cabal file, use directory only
                       )))
-    (progn
-      (message "cabal-dir: %s" cabal-dir)
-      cabal-dir)))
+    (message "cabal-dir: %s" cabal-dir)
+    cabal-dir))
 
 (defun lsp-haskell--get-root ()
   "Get project root directory.
