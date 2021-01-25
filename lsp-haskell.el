@@ -303,30 +303,28 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
 ;; Register all the language server settings with lsp-mode.
 ;; Note that customizing these will currently *not* send the updated configuration to the server,
 ;; users must manually restart. See https://github.com/emacs-lsp/lsp-mode/issues/1174.
-(lsp-register-custom-settings '(
-                                ("haskell.formattingProvider" lsp-haskell-formatting-provider)
-                                ("haskell.formatOnImportOn" lsp-haskell-format-on-import-on t)
-                                ("haskell.completionSnippetsOn" lsp-haskell-completion-snippets-on t)
-                                ("haskell.liquidOn" lsp-haskell-liquid-on t)
-                                ("haskell.diagnosticsOnChange" lsp-haskell-diagnostics-on-change t)
-                                ("haskell.maxNumberOfProblems" lsp-haskell-max-number-of-problems)
-                                ("haskell.hlintOn" lsp-haskell-hlint-on t)
+(lsp-register-custom-settings
+ '(("haskell.formattingProvider" lsp-haskell-formatting-provider)
+   ("haskell.formatOnImportOn" lsp-haskell-format-on-import-on t)
+   ("haskell.completionSnippetsOn" lsp-haskell-completion-snippets-on t)
+   ("haskell.liquidOn" lsp-haskell-liquid-on t)
+   ("haskell.diagnosticsOnChange" lsp-haskell-diagnostics-on-change t)
+   ("haskell.maxNumberOfProblems" lsp-haskell-max-number-of-problems)
+   ("haskell.hlintOn" lsp-haskell-hlint-on t)
 
-                                ("haskell.plugin.ghcide.globalOn"          lsp-haskell-ghcide-on t)
-                                ("haskell.plugin.pragmas.globalOn"         lsp-haskell-pragmas-on t)
-                                ("haskell.plugin.floskell.globalOn"        lsp-haskell-floskell-on t)
-                                ("haskell.plugin.fourmolu.globalOn"        lsp-haskell-fourmolu-on t)
-                                ("haskell.plugin.ormolu.globalOn"          lsp-haskell-ormolu-on t)
-                                ("haskell.plugin.stylish-haskell.globalOn" lsp-haskell-stylish-haskell-on t)
-                                ("haskell.plugin.brittany.globalOn"        lsp-haskell-brittany-on t)
-                                ("haskell.plugin.tactic.globalOn"          lsp-haskell-tactic-on t)
-                                ("haskell.plugin.retrie.globalOn"          lsp-haskell-retrie-on t)
-                                ("haskell.plugin.eval.globalOn"            lsp-haskell-eval-on t)
-                                ("haskell.plugin.importLens.globalOn"      lsp-haskell-importlens-on t)
-                                ("haskell.plugin.moduleName.globalOn"      lsp-haskell-modulename-on t)
-                                ("haskell.plugin.hlint.globalOn"           lsp-haskell-hlint-on t)
-
-                                ))
+   ("haskell.plugin.ghcide.globalOn"          lsp-haskell-ghcide-on t)
+   ("haskell.plugin.pragmas.globalOn"         lsp-haskell-pragmas-on t)
+   ("haskell.plugin.floskell.globalOn"        lsp-haskell-floskell-on t)
+   ("haskell.plugin.fourmolu.globalOn"        lsp-haskell-fourmolu-on t)
+   ("haskell.plugin.ormolu.globalOn"          lsp-haskell-ormolu-on t)
+   ("haskell.plugin.stylish-haskell.globalOn" lsp-haskell-stylish-haskell-on t)
+   ("haskell.plugin.brittany.globalOn"        lsp-haskell-brittany-on t)
+   ("haskell.plugin.tactic.globalOn"          lsp-haskell-tactic-on t)
+   ("haskell.plugin.retrie.globalOn"          lsp-haskell-retrie-on t)
+   ("haskell.plugin.eval.globalOn"            lsp-haskell-eval-on t)
+   ("haskell.plugin.importLens.globalOn"      lsp-haskell-importlens-on t)
+   ("haskell.plugin.moduleName.globalOn"      lsp-haskell-modulename-on t)
+   ("haskell.plugin.hlint.globalOn"           lsp-haskell-hlint-on t)))
 
 ;; This mapping is set for 'haskell-mode -> haskell' in the lsp-mode repo itself. If we move
 ;; it there, then delete it from here.
