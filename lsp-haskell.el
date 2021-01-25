@@ -1,7 +1,7 @@
 ;;; lsp-haskell.el --- Haskell support for lsp-mode
 
 ;; Version: 1.0
-;; Package-Requires: ((lsp-mode "3.0") (haskell-mode "1.0"))
+;; Package-Requires: ((emacs "24.3") (lsp-mode "3.0") (haskell-mode "1.0"))
 ;; Keywords: haskell
 ;; URL: https://github.com/emacs-lsp/lsp-haskell
 
@@ -21,6 +21,10 @@
 ;; along with this program; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ;; Floor, Boston, MA 02110-1301, USA.
+
+;;; Commentary:
+
+;; Haskell specific adapter for LSP mode
 
 ;;; Code:
 
@@ -52,10 +56,10 @@
   "Controls the maximum number of problems produced by the server."
   :group 'lsp-haskell
   :type 'number)
-(defcustom
-  lsp-haskell-diagnostics-on-change
+(defcustom lsp-haskell-diagnostics-on-change
   t
-  "Compute diagnostics continuously as you type. Turn off to only generate diagnostics on file save."
+  "Compute diagnostics continuously as you type.
+Turn off to only generate diagnostics on file save."
   :group 'lsp-haskell
   :type 'boolean)
 (defcustom lsp-haskell-liquid-on
@@ -161,13 +165,15 @@
 
 (defcustom lsp-haskell-server-path
   "haskell-language-server-wrapper"
-  "The language server executable. Can be something on the $PATH (e.g. 'ghcide') or a path to an executable itself."
+  "The language server executable.
+Can be something on the $PATH (e.g. 'ghcide') or a path to an executable itself."
   :group 'lsp-haskell
   :type 'string)
 
 (defcustom lsp-haskell-server-log-file
   (expand-file-name "hls.log" temporary-file-directory)
-  "The log file used by the server. Note that this is passed to the server via 'lsp-haskell-server-args', so if
+  "The log file used by the server.
+Note that this is passed to the server via 'lsp-haskell-server-args', so if
 you override that setting then this one will have no effect."
   :group 'lsp-haskell
   :type 'string)
@@ -183,7 +189,7 @@ For a debug log when using haskell-language-server, use `-d -l /tmp/hls.log'."
   #'identity
   "Use this to wrap the language server process started by lsp-haskell.
 For example, use the following the start the process in a nix-shell:
-(lambda (argv)
+\(lambda (argv)
   (append
    (append (list \"nix-shell\" \"-I\" \".\" \"--command\" )
            (list (mapconcat 'identity argv \" \"))
@@ -200,7 +206,7 @@ For example, use the following the start the process in a nix-shell:
 ;; HaRe functions
 
 (defun lsp-demote ()
-  "Demote a function to the level it is used"
+  "Demote a function to the level it is used."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -209,7 +215,7 @@ For example, use the following the start the process in a nix-shell:
              :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-duplicate-definition (newname)
-  "Duplicate a definition"
+  "Duplicate a definition."
   (interactive "sNew definition name: ")
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -274,9 +280,8 @@ For example, use the following the start the process in a nix-shell:
                         (file-name-directory cabal-file)
                       "." ;; no cabal file, use directory only
                       )))
-    (progn
-      (message "cabal-dir: %s" cabal-dir)
-      cabal-dir)))
+    (message "cabal-dir: %s" cabal-dir)
+    cabal-dir))
 
 (defun lsp-haskell--get-root ()
   "Get project root directory.
@@ -288,7 +293,7 @@ if projectile way fails"
       (projectile-project-root)
     (let ((dir (lsp-haskell--session-cabal-dir)))
       (if (string= dir "/")
-          (user-error (concat "Couldn't find cabal file, using:" dir))
+          (user-error "Couldn't find cabal file, using: %s" dir)
         dir))))
 
 ;; ---------------------------------------------------------------------
@@ -301,32 +306,30 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
   (funcall lsp-haskell-server-wrapper-function (append (list lsp-haskell-server-path "--lsp") lsp-haskell-server-args) ))
 
 ;; Register all the language server settings with lsp-mode.
-;; Note that customizing these will currently *not* send the updated configuration to the server, 
+;; Note that customizing these will currently *not* send the updated configuration to the server,
 ;; users must manually restart. See https://github.com/emacs-lsp/lsp-mode/issues/1174.
-(lsp-register-custom-settings '(
-                                ("haskell.formattingProvider" lsp-haskell-formatting-provider)
-                                ("haskell.formatOnImportOn" lsp-haskell-format-on-import-on t)
-                                ("haskell.completionSnippetsOn" lsp-haskell-completion-snippets-on t)
-                                ("haskell.liquidOn" lsp-haskell-liquid-on t)
-                                ("haskell.diagnosticsOnChange" lsp-haskell-diagnostics-on-change t)
-                                ("haskell.maxNumberOfProblems" lsp-haskell-max-number-of-problems)
-                                ("haskell.hlintOn" lsp-haskell-hlint-on t)
+(lsp-register-custom-settings
+ '(("haskell.formattingProvider" lsp-haskell-formatting-provider)
+   ("haskell.formatOnImportOn" lsp-haskell-format-on-import-on t)
+   ("haskell.completionSnippetsOn" lsp-haskell-completion-snippets-on t)
+   ("haskell.liquidOn" lsp-haskell-liquid-on t)
+   ("haskell.diagnosticsOnChange" lsp-haskell-diagnostics-on-change t)
+   ("haskell.maxNumberOfProblems" lsp-haskell-max-number-of-problems)
+   ("haskell.hlintOn" lsp-haskell-hlint-on t)
 
-                                ("haskell.plugin.ghcide.globalOn"          lsp-haskell-ghcide-on t)
-                                ("haskell.plugin.pragmas.globalOn"         lsp-haskell-pragmas-on t)
-                                ("haskell.plugin.floskell.globalOn"        lsp-haskell-floskell-on t)
-                                ("haskell.plugin.fourmolu.globalOn"        lsp-haskell-fourmolu-on t)
-                                ("haskell.plugin.ormolu.globalOn"          lsp-haskell-ormolu-on t)
-                                ("haskell.plugin.stylish-haskell.globalOn" lsp-haskell-stylish-haskell-on t)
-                                ("haskell.plugin.brittany.globalOn"        lsp-haskell-brittany-on t)
-                                ("haskell.plugin.tactic.globalOn"          lsp-haskell-tactic-on t)
-                                ("haskell.plugin.retrie.globalOn"          lsp-haskell-retrie-on t)
-                                ("haskell.plugin.eval.globalOn"            lsp-haskell-eval-on t)
-                                ("haskell.plugin.importLens.globalOn"      lsp-haskell-importlens-on t)
-                                ("haskell.plugin.moduleName.globalOn"      lsp-haskell-modulename-on t)
-                                ("haskell.plugin.hlint.globalOn"           lsp-haskell-hlint-on t)
-
-                                ))
+   ("haskell.plugin.ghcide.globalOn"          lsp-haskell-ghcide-on t)
+   ("haskell.plugin.pragmas.globalOn"         lsp-haskell-pragmas-on t)
+   ("haskell.plugin.floskell.globalOn"        lsp-haskell-floskell-on t)
+   ("haskell.plugin.fourmolu.globalOn"        lsp-haskell-fourmolu-on t)
+   ("haskell.plugin.ormolu.globalOn"          lsp-haskell-ormolu-on t)
+   ("haskell.plugin.stylish-haskell.globalOn" lsp-haskell-stylish-haskell-on t)
+   ("haskell.plugin.brittany.globalOn"        lsp-haskell-brittany-on t)
+   ("haskell.plugin.tactic.globalOn"          lsp-haskell-tactic-on t)
+   ("haskell.plugin.retrie.globalOn"          lsp-haskell-retrie-on t)
+   ("haskell.plugin.eval.globalOn"            lsp-haskell-eval-on t)
+   ("haskell.plugin.importLens.globalOn"      lsp-haskell-importlens-on t)
+   ("haskell.plugin.moduleName.globalOn"      lsp-haskell-modulename-on t)
+   ("haskell.plugin.hlint.globalOn"           lsp-haskell-hlint-on t)))
 
 ;; This mapping is set for 'haskell-mode -> haskell' in the lsp-mode repo itself. If we move
 ;; it there, then delete it from here.
