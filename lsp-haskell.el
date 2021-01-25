@@ -288,7 +288,7 @@ if projectile way fails"
       (projectile-project-root)
     (let ((dir (lsp-haskell--session-cabal-dir)))
       (if (string= dir "/")
-          (user-error (concat "Couldn't find cabal file, using:" dir))
+          (user-error "Couldn't find cabal file, using: %s" dir)
         dir))))
 
 ;; ---------------------------------------------------------------------
