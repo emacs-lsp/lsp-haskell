@@ -18,20 +18,21 @@ If you would like to know about the LSP functionality which is provided by the H
 
 ## Emacs Configuration
 
-Install [`lsp-mode`](https://github.com/emacs-lsp/lsp-mode) first, and either clone this repository, or install from MELPA. Add the following to your `.emacs`:
+Follow the `lsp-mode` [installation instructions](https://emacs-lsp.github.io/lsp-mode/page/installation/). 
+Do not skip this!
+It has important information.
+
+`lsp-mode` automatically requires the `lsp-haskell` package , so you do not need to `require` `lsp-haskell` unless you like being explicit.
+
+You will need to set some hooks to ensure that `lsp-mode` is triggered when the `haskell-mode` major mode is entered.
 
 ```emacs-lisp
-(require 'lsp)
-(require 'lsp-haskell)
-;; Hooks so haskell and literate haskell major modes trigger LSP setup
 (add-hook 'haskell-mode-hook #'lsp)
 (add-hook 'haskell-literate-mode-hook #'lsp)
 ```
 
-Note: All three packages are also available via MELPA.
-
-All the functionality provided by `lsp-haskell` can be customized using Emacs customization variables in the `lsp-haskell` group.
-Run `(customize-group lsp-haskell)` to get started.
+All the functionality provided by `lsp-haskell` can be customized using Emacs customization variables in the `lsp-haskell` group (itself in the `lsp` group)..
+Run `(customize-group lsp-haskell)` or `(customize-group lsp)` to get started.
 
 ## Language server installation
 
