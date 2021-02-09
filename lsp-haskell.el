@@ -215,7 +215,7 @@ For example, use the following the start the process in a nix-shell:
              :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-duplicate-definition (newname)
-  "Duplicate a definition."
+  "Duplicate a definition with the new name NEWNAME."
   (interactive "sNew definition name: ")
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -225,7 +225,7 @@ For example, use the following the start the process in a nix-shell:
              :text ,newname))))
 
 (defun lsp-if-to-case ()
-  "Convert an if statement to a case statement"
+  "Convert an if statement to a case statement."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -235,7 +235,7 @@ For example, use the following the start the process in a nix-shell:
              :end_pos   ,(lsp-get-end-position)))))
 
 (defun lsp-lift-level ()
-  "Lift a function to the top level"
+  "Lift a function to the top level."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -244,7 +244,7 @@ For example, use the following the start the process in a nix-shell:
              :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-lift-to-top ()
-  "Lift a function to the top level"
+  "Lift a function to the top level."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -253,7 +253,7 @@ For example, use the following the start the process in a nix-shell:
              :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-delete-definition ()
-  "Delete a definition"
+  "Delete a definition."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
@@ -262,7 +262,7 @@ For example, use the following the start the process in a nix-shell:
              :pos  ,(lsp-point-to-position (point))))))
 
 (defun lsp-generalise-applicative ()
-  "Generalise a monadic function to use applicative"
+  "Generalise a monadic function to use applicative."
   (interactive)
   (lsp--cur-workspace-check)
   (lsp--send-execute-command
