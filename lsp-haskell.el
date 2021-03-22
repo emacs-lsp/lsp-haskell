@@ -268,6 +268,7 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
 ;; It also isn't *too* important: it only sets the language ID, see
 ;; https://microsoft.github.io/language-server-protocol/specification#textDocumentItem
 (add-to-list 'lsp-language-id-configuration '(haskell-literate-mode . "haskell"))
+(add-to-list 'lsp-language-id-configuration '(literate-haskell-mode . "haskell"))
 
 ;; Register the client itself
 (lsp-register-client
@@ -275,7 +276,7 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
     :new-connection (lsp-stdio-connection (lambda () (lsp-haskell--server-command)))
     ;; Should run under haskell-mode and haskell-literate-mode. We need to list the
     ;; latter even though it's a derived mode of the former
-    :major-modes '(haskell-mode haskell-literate-mode)
+    :major-modes '(haskell-mode haskell-literate-mode literate-haskell-mode)
     ;; This is arbitrary.
     :server-id 'lsp-haskell
     ;; We need to manually pull out the configuration section and set it. Possibly in
