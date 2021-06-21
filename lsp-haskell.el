@@ -68,7 +68,7 @@ Turn off to only generate diagnostics on file save."
   :group 'lsp-haskell
   :type 'boolean)
 (defcustom lsp-haskell-completion-snippets-on
-  t
+  lsp-enable-snippet
   "Show snippets with type information when using code completion."
   :group 'lsp-haskell
   :type 'boolean)
