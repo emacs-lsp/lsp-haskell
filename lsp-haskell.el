@@ -1,7 +1,7 @@
 ;;; lsp-haskell.el --- Haskell support for lsp-mode
 
 ;; Version: 1.0
-;; Package-Requires: ((emacs "24.3") (lsp-mode "3.0") (haskell-mode "1.0"))
+;; Package-Requires: ((emacs "26.1") (lsp-mode "3.0") (haskell-mode "1.0"))
 ;; Keywords: haskell
 ;; URL: https://github.com/emacs-lsp/lsp-haskell
 
@@ -227,6 +227,15 @@ if projectile way fails"
       (if (string= dir "/")
           (user-error "Couldn't find cabal file, using: %s" dir)
         dir))))
+
+(defun lsp-haskell-execute-code-action-add-signature ()
+  "Execute code action of add signature.
+Add the type signature that GHC infers to the function located below the point."
+  (interactive)
+  (let ((action (seq-find (lambda (e) (string-prefix-p "add signature" (gethash "title" e))) (lsp-code-actions-at-point))))
+    (if (hash-table-p action)
+        (lsp-execute-code-action action)
+      (message "I Can't find add signature action for this point"))))
 
 ;; ---------------------------------------------------------------------
 ;; Starting the server and registration with lsp-mode
