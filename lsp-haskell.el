@@ -228,6 +228,25 @@ if projectile way fails"
           (user-error "Couldn't find cabal file, using: %s" dir)
         dir))))
 
+
+;; ---------------------------------------------------------------------
+;; Interactive commands
+
+(defun lsp-haskell-case-split ()
+  "Case split on an identifier.
+To use this, place make sure the point is over a type hole."
+  (interactive)
+  (let* ((case-split-regex "Case split on \\(.*\\)")
+         (actions (-filter (lambda (action) (s-matches-p case-split-regex (lsp:code-action-title action))) (lsp-code-actions-at-point))))
+    (lsp-execute-code-action (cond ((seq-empty-p actions) (signal 'lsp-no-code-actions nil))
+                                   ((and (eq (seq-length actions) 1) lsp-auto-execute-action)
+                                    (lsp-seq-first actions))
+                                   (t (lsp--completing-read "Identifier: "
+                                                            (seq-into actions 'list)
+                                                            (lambda (action)
+                                                              (cadr (s-match case-split-regex (lsp:code-action-title action))))
+                                                            nil t))))))
+
 ;; ---------------------------------------------------------------------
 ;; Starting the server and registration with lsp-mode
 
