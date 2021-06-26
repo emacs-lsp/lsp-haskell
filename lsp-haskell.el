@@ -232,8 +232,10 @@ if projectile way fails"
   "Execute code action of add signature.
 Add the type signature that GHC infers to the function located below the point."
   (interactive)
-  (let ((action (seq-find (lambda (e) (string-prefix-p "add signature" (gethash "title" e))) (lsp-code-actions-at-point))))
-    (if (hash-table-p action)
+  (let ((action (seq-find
+                 (lambda (e) (string-prefix-p "add signature" (lsp:code-action-title e)))
+                 (lsp-code-actions-at-point))))
+    (if action
         (lsp-execute-code-action action)
       (message "I Can't find add signature action for this point"))))
 
