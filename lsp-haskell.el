@@ -237,7 +237,7 @@ Add the type signature that GHC infers to the function located below the point."
                  (lsp-code-actions-at-point))))
     (if action
         (lsp-execute-code-action action)
-      (message "I Can't find add signature action for this point"))))
+      (message "I can't find add signature action for this point"))))
 
 ;; ---------------------------------------------------------------------
 ;; Starting the server and registration with lsp-mode
