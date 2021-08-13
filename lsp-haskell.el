@@ -149,6 +149,11 @@ Turn off to only generate diagnostics on file save."
   "Turn on the explicit import lens."
   :group 'lsp-haskell-plugins
   :type 'boolean)
+(defcustom lsp-haskell-refineimports-on
+  t
+  "Turn on the refine imports lens."
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
 (defcustom lsp-haskell-modulename-on
   t
   "Turn on the moduleName plugin."
@@ -260,6 +265,7 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
    ("haskell.plugin.retrie.globalOn"          lsp-haskell-retrie-on t)
    ("haskell.plugin.eval.globalOn"            lsp-haskell-eval-on t)
    ("haskell.plugin.importLens.globalOn"      lsp-haskell-importlens-on t)
+   ("haskell.plugin.refineImports.globalOn"   lsp-haskell-refineimports-on t)
    ("haskell.plugin.moduleName.globalOn"      lsp-haskell-modulename-on t)
    ("haskell.plugin.hlint.globalOn"           lsp-haskell-hlint-on t)))
 
