@@ -302,7 +302,7 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
     ;; This is somewhat irrelevant, but it is listed in lsp-language-id-configuration, so
     ;; we should set something consistent here.
     :language-id "haskell"
-    :completion-in-comments? (lsp-haskell-completion-in-comments)
+    :completion-in-comments? lsp-haskell-completion-in-comments
     ))
 
 ;; ---------------------------------------------------------------------
