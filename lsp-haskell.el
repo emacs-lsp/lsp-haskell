@@ -208,6 +208,16 @@ For example, use the following the start the process in a nix-shell:
           (function :tag "Custom function")))
 
 ;; ---------------------------------------------------------------------
+;; Miscellaneous options
+;;
+(defcustom lsp-haskell-completion-in-comments
+  t
+  "Whether to trigger completions in comments.
+Note that this must be set to true in order to get completion of pragmas."
+  :group 'lsp-haskell
+  :type 'boolean)
+
+;; ---------------------------------------------------------------------
 ;; Miscellaneous useful functions
 
 (defun lsp-haskell--session-cabal-dir ()
@@ -292,8 +302,7 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
     ;; This is somewhat irrelevant, but it is listed in lsp-language-id-configuration, so
     ;; we should set something consistent here.
     :language-id "haskell"
-    ;; This is required for completions to works inside language pragma statements
-    :completion-in-comments? t
+    :completion-in-comments? (lsp-haskell-completion-in-comments)
     ))
 
 ;; ---------------------------------------------------------------------
