@@ -46,47 +46,21 @@
 ;; Originally generated from the vscode extension's package.json using lsp-generate-bindings.
 ;; Should ideally stay in sync with what's offered in the vscode extension.
 
-(defcustom lsp-haskell-hlint-on
-  t
-  "Get suggestions from hlint."
-  :group 'lsp-haskell
-  :type 'boolean)
-(defcustom lsp-haskell-max-number-of-problems
-  100
-  "Controls the maximum number of problems produced by the server."
-  :group 'lsp-haskell
-  :type 'number)
-(defcustom lsp-haskell-diagnostics-on-change
-  t
-  "Compute diagnostics continuously as you type.
-Turn off to only generate diagnostics on file save."
-  :group 'lsp-haskell
-  :type 'boolean)
-(defcustom lsp-haskell-liquid-on
-  nil
-  "Get diagnostics from liquid haskell."
-  :group 'lsp-haskell
-  :type 'boolean)
-(defcustom lsp-haskell-completion-snippets-on
-  lsp-enable-snippet
-  "Show snippets with type information when using code completion."
-  :group 'lsp-haskell
-  :type 'boolean)
-(defcustom lsp-haskell-format-on-import-on
-  t
-  "When adding an import, use the formatter on the result."
-  :group 'lsp-haskell
-  :type 'boolean)
 (defcustom lsp-haskell-formatting-provider
   "ormolu"
-  "The formatter to use when formatting a document or range."
+  "The formatter to use when formatting a document or range. Ensure the plugin is enabled."
   :group 'lsp-haskell
-  :type '(choice (const :tag "brittany" "brittany")
-                 (const :tag "floskell" "floskell")
-                 (const :tag "fourmolu" "fourmolu")
-                 (const :tag "ormolu" "ormolu")
-                 (const :tag "stylish-haskell" "stylish-haskell")
-                 (const :tag "none" "none")))
+  :type '(choice (:tag "brittany" "floskell" "fourmolu" "ormolu" "stylish-haskell" "none")))
+(defcustom lsp-haskell-check-project
+  t
+  "Whether to typecheck the entire project on load. It could lead to bad perfomance in large projects."
+  :group 'lsp-haskell
+  :type 'boolean)
+(defcustom lsp-haskell-max-completions
+  40
+  "Maximum number of completions sent to the editor."
+  :group 'lsp-haskell
+  :type 'number)
 
 ;; ---------------------------------------------------------------------
 ;; Plugin-specific configuration
@@ -94,74 +68,124 @@ Turn off to only generate diagnostics on file save."
   "Customization group for 'lsp-haskell' plugins."
   :group 'lsp-haskell)
 
-(defcustom lsp-haskell-ghcide-on
+(defcustom lsp-haskell-plugin-import-lens-code-actions-on
   t
-  "Turn on the ghcide plugins."
+  "Enables explicit imports code actions"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-pragmas-on
+(defcustom lsp-haskell-plugin-import-lens-code-lens-on
   t
-  "Turn on the pragmas plugin."
+  "Enables explicit imports code lenses"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-floskell-on
+(defcustom lsp-haskell-plugin-hlint-code-actions-on
   t
-  "Turn on the floskell plugin."
+  "Enables hlint code actions (apply hints)"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-fourmolu-on
+(defcustom lsp-haskell-plugin-hlint-diagnostics-on
   t
-  "Turn on the fourmolu plugin."
+  "Enables hlint diagnostics"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-ormolu-on
+(defcustom lsp-haskell-plugin-hlint-config-flags
+  nil
+  "Flags used by hlint"
+  :group 'lsp-haskell-plugins
+  :type 'lsp-string-vector)
+(defcustom lsp-haskell-plugin-eval-global-on
   t
-  "Turn on the ormolu plugin."
+  "Enables eval plugin"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-stylish-haskell-on
+(defcustom lsp-haskell-plugin-module-name-global-on
   t
-  "Turn on the stylish-haskell plugin."
+  "Enables module name plugin"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-brittany-on
+(defcustom lsp-haskell-plugin-splice-global-on
   t
-  "Turn on the brittany plugin."
+  "Enables splice plugin (expand template haskell definitions)"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-tactic-on
+(defcustom lsp-haskell-plugin-haddock-comments-global-on
   t
-  "Turn on the tactic plugin."
+  "Enables haddock comments plugin"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-retrie-on
+(defcustom lsp-haskell-plugin-class-global-on
   t
-  "Turn on the retrie plugin."
+  "Enables type class plugin"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-eval-on
+(defcustom lsp-haskell-plugin-retrie-global-on
   t
-  "Turn on the eval plugin."
+  "Enables retrie plugin"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-importlens-on
+(defcustom lsp-haskell-plugin-tactics-global-on
   t
-  "Turn on the explicit import lens."
+  "Enables Wingman (tactics) plugin"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-refineimports-on
+(defcustom lsp-haskell-plugin-tactics-config-auto-gas
+  4
+  "The depth of the search tree when performing \"Attempt to fill hole\". Bigger values will be able to derive more solutions, but will take exponentially more time."
+  :group 'lsp-haskell-plugins
+  :type 'number)
+(defcustom lsp-haskell-plugin-tactics-config-hole-severity
+  nil
+  "The severity to use when showing hole diagnostics."
+  :group 'lsp-haskell-plugins
+  :type '(choice (:tag 1 2 3 4 nil)))
+(defcustom lsp-haskell-plugin-tactics-config-max-use-ctor-actions
+  5
+  "Maximum number of `Use constructor <x>` code actions that can appear"
+  :group 'lsp-haskell-plugins
+  :type 'number)
+(defcustom lsp-haskell-plugin-tactics-config-timeout-duration
+  2
+  "The timeout for Wingman actions, in seconds"
+  :group 'lsp-haskell-plugins
+  :type 'number)
+(defcustom lsp-haskell-plugin-tactics-config-proofstate-styling
   t
-  "Turn on the refine imports lens."
+  "Should Wingman emit styling markup when showing metaprogram proof states?"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-modulename-on
+(defcustom lsp-haskell-plugin-pragmas-code-actions-on
   t
-  "Turn on the moduleName plugin."
+  "Enables pragmas code actions"
   :group 'lsp-haskell-plugins
   :type 'boolean)
-(defcustom lsp-haskell-hlint-on
+(defcustom lsp-haskell-plugin-pragmas-completion-on
   t
-  "Turn on the hlint plugin."
+  "Enables pragmas completions"
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-plugin-ghcide-completions-config-auto-extend-on
+  t
+  "Extends the import list automatically when completing a out-of-scope identifier"
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-plugin-ghcide-completions-config-snippets-on
+  lsp-enable-snippet
+  "Inserts snippets when using code completions"
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-plugin-ghcide-type-lenses-global-on
+  t
+  "Enables type lenses plugin"
+  :group 'lsp-haskell-plugins
+  :type 'boolean)
+(defcustom lsp-haskell-plugin-ghcide-type-lenses-config-mode
+  t
+  "Control how type lenses are shown"
+  :group 'lsp-haskell-plugins
+  :type '(choice (:tag "always" "exported" "diagnostics")))
+(defcustom lsp-haskell-plugin-refine-imports-global-on
+  t
+  "Enables refine imports plugin"
   :group 'lsp-haskell-plugins
   :type 'boolean)
 
@@ -256,28 +280,33 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
 ;; Note that customizing these will currently *not* send the updated configuration to the server,
 ;; users must manually restart. See https://github.com/emacs-lsp/lsp-mode/issues/1174.
 (lsp-register-custom-settings
- '(("haskell.formattingProvider" lsp-haskell-formatting-provider)
-   ("haskell.formatOnImportOn" lsp-haskell-format-on-import-on t)
-   ("haskell.completionSnippetsOn" lsp-haskell-completion-snippets-on t)
-   ("haskell.liquidOn" lsp-haskell-liquid-on t)
-   ("haskell.diagnosticsOnChange" lsp-haskell-diagnostics-on-change t)
-   ("haskell.maxNumberOfProblems" lsp-haskell-max-number-of-problems)
-   ("haskell.hlintOn" lsp-haskell-hlint-on t)
-
-   ("haskell.plugin.ghcide.globalOn"          lsp-haskell-ghcide-on t)
-   ("haskell.plugin.pragmas.globalOn"         lsp-haskell-pragmas-on t)
-   ("haskell.plugin.floskell.globalOn"        lsp-haskell-floskell-on t)
-   ("haskell.plugin.fourmolu.globalOn"        lsp-haskell-fourmolu-on t)
-   ("haskell.plugin.ormolu.globalOn"          lsp-haskell-ormolu-on t)
-   ("haskell.plugin.stylish-haskell.globalOn" lsp-haskell-stylish-haskell-on t)
-   ("haskell.plugin.brittany.globalOn"        lsp-haskell-brittany-on t)
-   ("haskell.plugin.tactic.globalOn"          lsp-haskell-tactic-on t)
-   ("haskell.plugin.retrie.globalOn"          lsp-haskell-retrie-on t)
-   ("haskell.plugin.eval.globalOn"            lsp-haskell-eval-on t)
-   ("haskell.plugin.importLens.globalOn"      lsp-haskell-importlens-on t)
-   ("haskell.plugin.refineImports.globalOn"   lsp-haskell-refineimports-on t)
-   ("haskell.plugin.moduleName.globalOn"      lsp-haskell-modulename-on t)
-   ("haskell.plugin.hlint.globalOn"           lsp-haskell-hlint-on t)))
+ '(("haskell.plugin.refineImports.globalOn" lsp-haskell-plugin-refine-imports-global-on t)
+   ("haskell.plugin.ghcide-type-lenses.config.mode" lsp-haskell-plugin-ghcide-type-lenses-config-mode)
+   ("haskell.plugin.ghcide-type-lenses.globalOn" lsp-haskell-plugin-ghcide-type-lenses-global-on t)
+   ("haskell.plugin.ghcide-completions.config.snippetsOn" lsp-haskell-plugin-ghcide-completions-config-snippets-on t)
+   ("haskell.plugin.ghcide-completions.config.autoExtendOn" lsp-haskell-plugin-ghcide-completions-config-auto-extend-on t)
+   ("haskell.plugin.pragmas.completionOn" lsp-haskell-plugin-pragmas-completion-on t)
+   ("haskell.plugin.pragmas.codeActionsOn" lsp-haskell-plugin-pragmas-code-actions-on t)
+   ("haskell.plugin.tactics.config.proofstate_styling" lsp-haskell-plugin-tactics-config-proofstate-styling t)
+   ("haskell.plugin.tactics.config.timeout_duration" lsp-haskell-plugin-tactics-config-timeout-duration)
+   ("haskell.plugin.tactics.config.max_use_ctor_actions" lsp-haskell-plugin-tactics-config-max-use-ctor-actions)
+   ("haskell.plugin.tactics.config.hole_severity" lsp-haskell-plugin-tactics-config-hole-severity)
+   ("haskell.plugin.tactics.config.auto_gas" lsp-haskell-plugin-tactics-config-auto-gas)
+   ("haskell.plugin.tactics.globalOn" lsp-haskell-plugin-tactics-global-on t)
+   ("haskell.plugin.retrie.globalOn" lsp-haskell-plugin-retrie-global-on t)
+   ("haskell.plugin.class.globalOn" lsp-haskell-plugin-class-global-on t)
+   ("haskell.plugin.haddockComments.globalOn" lsp-haskell-plugin-haddock-comments-global-on t)
+   ("haskell.plugin.splice.globalOn" lsp-haskell-plugin-splice-global-on t)
+   ("haskell.plugin.moduleName.globalOn" lsp-haskell-plugin-module-name-global-on t)
+   ("haskell.plugin.eval.globalOn" lsp-haskell-plugin-eval-global-on t)
+   ("haskell.plugin.hlint.config.flags" lsp-haskell-plugin-hlint-config-flags)
+   ("haskell.plugin.hlint.diagnosticsOn" lsp-haskell-plugin-hlint-diagnostics-on t)
+   ("haskell.plugin.hlint.codeActionsOn" lsp-haskell-plugin-hlint-code-actions-on t)
+   ("haskell.plugin.importLens.codeLensOn" lsp-haskell-plugin-import-lens-code-lens-on t)
+   ("haskell.plugin.importLens.codeActionsOn" lsp-haskell-plugin-import-lens-code-actions-on t)
+   ("haskell.maxCompletions" lsp-haskell-max-completions)
+   ("haskell.checkProject" lsp-haskell-check-project t)
+   ("haskell.formattingProvider" lsp-haskell-formatting-provider)))
 
 ;; This mapping is set for 'haskell-mode -> haskell' in the lsp-mode repo itself. If we move
 ;; it there, then delete it from here.
