@@ -50,7 +50,7 @@
   "ormolu"
   "The formatter to use when formatting a document or range. Ensure the plugin is enabled."
   :group 'lsp-haskell
-  :type '(choice (:tag "brittany" "floskell" "fourmolu" "ormolu" "stylish-haskell" "none")))
+  :type '(choice (const "brittany") (const "floskell") (const "fourmolu") (const "ormolu") (const "stylish-haskell") (const "none")))
 (defcustom lsp-haskell-check-project
   t
   "Whether to typecheck the entire project on load. It could lead to bad perfomance in large projects."
@@ -137,7 +137,7 @@
   nil
   "The severity to use when showing hole diagnostics."
   :group 'lsp-haskell-plugins
-  :type '(choice (:tag 1 2 3 4 nil)))
+  :type '(choice (const 1) (const 2) (const 3) (const 4) (const nil)))
 (defcustom lsp-haskell-plugin-tactics-config-max-use-ctor-actions
   5
   "Maximum number of `Use constructor <x>` code actions that can appear"
@@ -182,7 +182,7 @@
   t
   "Control how type lenses are shown"
   :group 'lsp-haskell-plugins
-  :type '(choice (:tag "always" "exported" "diagnostics")))
+  :type '(choice (const "always") (const "exported") (const "diagnostics")))
 (defcustom lsp-haskell-plugin-refine-imports-global-on
   t
   "Enables refine imports plugin"
