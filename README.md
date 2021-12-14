@@ -16,9 +16,9 @@ This main functionality of `lsp-haskell` is:
 If you would like to know about how LSP functionality is provided in Emacs and how to use it, please consult [`lsp-mode`](https://github.com/emacs-lsp/lsp-mode).
 If you would like to know about the LSP functionality which is provided by the Haskell language server, please consult [`haskell-language-server`](https://github.com/haskell/haskell-language-server).
 
-## Emacs Configuration
+## Installation
 
-Follow the `lsp-mode` [installation instructions](https://emacs-lsp.github.io/lsp-mode/page/installation/). 
+Follow the `lsp-mode` [installation instructions](https://emacs-lsp.github.io/lsp-mode/page/installation/).
 Do not skip this!
 It has important information.
 
@@ -31,8 +31,28 @@ You will need to set some hooks to ensure that `lsp-mode` is triggered when the 
 (add-hook 'haskell-literate-mode-hook #'lsp)
 ```
 
-All the functionality provided by `lsp-haskell` can be customized using Emacs customization variables in the `lsp-haskell` group (itself in the `lsp` group)..
-Run `(customize-group lsp-haskell)` or `(customize-group lsp)` to get started.
+## Configuration
+
+HLS has some [configuration](https://haskell-language-server.readthedocs.io/en/latest/configuration.html) you can modify using either the `lsp-haskell` or `lsp` customization groups:
+
+```emacs-lisp
+(customize-group 'lsp-haskell)
+
+; or
+
+(customize-group 'lsp)
+```
+
+If you want to modify some configuration that this project doesn't support yet you can customize things explicitly yourself using `lsp--set-configuration`. For example:
+
+```emacs-lisp
+(add-hook 'lsp-after-initialize-hook
+          '(lambda ()
+             (lsp--set-configuration
+              '(:haskell (:plugin (:tactics (:config (:timeout_duration 5)))))
+              )))
+```
+
 
 ## Language server installation
 
