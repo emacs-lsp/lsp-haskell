@@ -1,7 +1,7 @@
 ;;; lsp-haskell.el --- Haskell support for lsp-mode
 
 ;; Version: 1.0
-;; Package-Requires: ((emacs "24.3") (lsp-mode "3.0") (haskell-mode "1.0"))
+;; Package-Requires: ((emacs "24.3") (lsp-mode "3.0"))
 ;; Keywords: haskell
 ;; URL: https://github.com/emacs-lsp/lsp-haskell
 
@@ -28,7 +28,7 @@
 
 ;;; Code:
 
-(require 'haskell)
+(require 'haskell nil 'noerror)
 (require 'lsp-mode)
 (require 'projectile nil 'noerror)
 
@@ -246,26 +246,16 @@ Note that this must be set to true in order to get completion of pragmas."
 
 (defun lsp-haskell--session-cabal-dir ()
   "Get the session cabal-dir."
-  (let* ((cabal-file (haskell-cabal-find-file))
+  (let* ((cabal-file (when (fboundp #'haskell-cabal-find-file)
+                       (haskell-cabal-find-file)))
          (cabal-dir (if cabal-file
                         (file-name-directory cabal-file)
-                      "." ;; no cabal file, use directory only
-                      )))
+                      ;; no cabal file, try `lsp--suggest-project-root' else go with the current directory
+                      (or (lsp--suggest-project-root) "."))))
     (message "cabal-dir: %s" cabal-dir)
     cabal-dir))
 
-(defun lsp-haskell--get-root ()
-  "Get project root directory.
-
-First searches for root via projectile.  Tries to find cabal file
-if projectile way fails"
-  ;; (if (and (fboundp 'projectile-project-root) (projectile-project-root))
-  (if nil
-      (projectile-project-root)
-    (let ((dir (lsp-haskell--session-cabal-dir)))
-      (if (string= dir "/")
-          (user-error "Couldn't find cabal file, using: %s" dir)
-        dir))))
+(defalias 'lsp-haskell--get-root 'lsp--suggest-project-root)
 
 ;; ---------------------------------------------------------------------
 ;; Starting the server and registration with lsp-mode
@@ -313,14 +303,14 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
 ;; It also isn't *too* important: it only sets the language ID, see
 ;; https://microsoft.github.io/language-server-protocol/specification#textDocumentItem
 (add-to-list 'lsp-language-id-configuration '(haskell-literate-mode . "haskell"))
+(add-to-list 'lsp-language-id-configuration '(haskell-tng-mode . "haskell"))
 
 ;; Register the client itself
 (lsp-register-client
   (make-lsp--client
     :new-connection (lsp-stdio-connection (lambda () (lsp-haskell--server-command)))
-    ;; Should run under haskell-mode and haskell-literate-mode. We need to list the
-    ;; latter even though it's a derived mode of the former
-    :major-modes '(haskell-mode haskell-literate-mode)
+    ;; Should run under haskell-mode, haskell-literate-mode and haskell-tng-mode. We need to list haskell-literate-mode even though it's a derived mode of haskell-mode.
+    :major-modes '(haskell-mode haskell-literate-mode haskell-tng-mode)
     ;; This is arbitrary.
     :server-id 'lsp-haskell
     ;; We need to manually pull out the configuration section and set it. Possibly in
