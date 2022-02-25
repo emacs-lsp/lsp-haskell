@@ -28,9 +28,7 @@
 
 ;;; Code:
 
-(require 'haskell nil 'noerror)
 (require 'lsp-mode)
-(require 'projectile nil 'noerror)
 
 ;; ---------------------------------------------------------------------
 ;; Configuration
