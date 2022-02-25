@@ -242,22 +242,6 @@ Note that this must be set to true in order to get completion of pragmas."
   :type 'boolean)
 
 ;; ---------------------------------------------------------------------
-;; Miscellaneous useful functions
-
-(defun lsp-haskell--session-cabal-dir ()
-  "Get the session cabal-dir."
-  (let* ((cabal-file (when (fboundp #'haskell-cabal-find-file)
-                       (haskell-cabal-find-file)))
-         (cabal-dir (if cabal-file
-                        (file-name-directory cabal-file)
-                      ;; no cabal file, try `lsp--suggest-project-root' else go with the current directory
-                      (or (lsp--suggest-project-root) "."))))
-    (message "cabal-dir: %s" cabal-dir)
-    cabal-dir))
-
-(defalias 'lsp-haskell--get-root 'lsp--suggest-project-root)
-
-;; ---------------------------------------------------------------------
 ;; Starting the server and registration with lsp-mode
 
 (defun lsp-haskell--server-command ()
