@@ -248,7 +248,7 @@ For example, use the following the start the process in a nix-shell:
    (append (list \"nix-shell\" \"-I\" \".\" \"--command\" )
            (list (mapconcat 'identity argv \" \"))
            )
-   (list (concat (lsp-haskell--get-root) \"/shell.nix\"))
+   (list (concat (lsp--suggest-project-root) \"/shell.nix\"))
    )
   )"
   :group 'lsp-haskell
