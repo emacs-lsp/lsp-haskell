@@ -2,7 +2,12 @@
          "1.0"
          "Haskell support for lsp-mode")
 
+(website-url "https://github.com/emacs-lsp/lsp-haskell")
+(keywords "haskell")
+
 (package-file "lsp-haskell.el")
+
+(script "test" "echo \"Error: no test specified\" && exit 1")
 
 (source "gnu")
 (source "melpa")
