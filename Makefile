@@ -21,6 +21,6 @@ lint:
 	$(EASK) lint package
 
 clean:
-	$(EASK) clean-all
+	$(EASK) clean all
 
 .PHONY : test compile checkdoc lint clean tag
