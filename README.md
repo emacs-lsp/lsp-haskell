@@ -23,6 +23,7 @@ Do not skip this!
 It has important information.
 
 `lsp-mode` automatically requires the `lsp-haskell` package , so you do not need to `require` `lsp-haskell` unless you like being explicit.
+Similarly, `lsp-haskell` automatically requires the `haskell-mode` package, so you do not need to `require` `haskell-mode`.
 
 You will need to set some hooks to ensure that `lsp-mode` is triggered when the `haskell-mode` major mode is entered.
 

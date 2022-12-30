@@ -1,5 +1,5 @@
 (package "lsp-haskell"
-         "1.0"
+         "1.1"
          "Haskell support for lsp-mode")
 
 (website-url "https://github.com/emacs-lsp/lsp-haskell")
@@ -14,6 +14,7 @@
 
 (depends-on "emacs" "24.3")
 (depends-on "lsp-mode")
+(depends-on "haskell-mode")
 
 (development
  (depends-on "f")
