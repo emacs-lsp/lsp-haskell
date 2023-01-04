@@ -136,6 +136,12 @@
   :group 'lsp-haskell-plugins
   :type 'boolean
   :lsp-path "haskell.plugin.retrie.globalOn")
+(defcustom-lsp lsp-haskell-plugin-stan-global-on
+  t
+  "Enables stan plugin"
+  :group 'lsp-haskell-plugins
+  :type 'boolean
+  :lsp-path "haskell.plugin.stan.globalOn")
 (defcustom-lsp lsp-haskell-plugin-tactics-global-on
   t
   "Enables Wingman (tactics) plugin"
