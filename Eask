@@ -12,7 +12,7 @@
 (source "gnu")
 (source "melpa")
 
-(depends-on "emacs" "24.3")
+(depends-on "emacs" "27.1")
 (depends-on "lsp-mode")
 (depends-on "haskell-mode")
 
