@@ -288,13 +288,14 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
 ;; https://microsoft.github.io/language-server-protocol/specification#textDocumentItem
 (add-to-list 'lsp-language-id-configuration '(haskell-literate-mode . "haskell"))
 (add-to-list 'lsp-language-id-configuration '(haskell-tng-mode . "haskell"))
+(add-to-list 'lsp-language-id-configuration '(haskell-cabal-mode . "haskell"))
 
 ;; Register the client itself
 (lsp-register-client
   (make-lsp--client
     :new-connection (lsp-stdio-connection (lambda () (lsp-haskell--server-command)))
     ;; Should run under haskell-mode, haskell-literate-mode and haskell-tng-mode. We need to list haskell-literate-mode even though it's a derived mode of haskell-mode.
-    :major-modes '(haskell-mode haskell-literate-mode haskell-tng-mode)
+    :major-modes '(haskell-mode haskell-literate-mode haskell-tng-mode haskell-cabal-mode)
     ;; This is arbitrary.
     :server-id 'lsp-haskell
     ;; HLS does not currently send 'workspace/configuration' on startup (https://github.com/haskell/haskell-language-server/issues/2762), 
