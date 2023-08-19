@@ -230,35 +230,43 @@ but will take exponentially more time."
 (lsp-defcustom lsp-haskell-plugin-cabal-code-actions-on t
   "Enables cabal code actions"
   :type 'boolean
-  :group 'lsp-haskell
+  :group 'lsp-haskell-plugins
   :package-version '(lsp-mode . "8.0.1")
   :lsp-path "haskell.plugin.cabal.codeActionsOn")
+
+(lsp-defcustom lsp-haskell-plugin-cabal-completion-on t
+  "Enables cabal completions"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.cabal.completionOn")
+
 
 (lsp-defcustom lsp-haskell-plugin-overloaded-record-dot-global-on t
   "Enables overloaded-record-dot plugin"
   :type 'boolean
-  :group 'lsp-haskell
+  :group 'lsp-haskell-plugins
   :package-version '(lsp-mode . "8.0.1")
   :lsp-path "haskell.plugin.overloaded-record-dot.globalOn")
 
 (lsp-defcustom lsp-haskell-plugin-pragmas-completion-global-on t
   "Enables pragmas-completion plugin"
   :type 'boolean
-  :group 'lsp-haskell
+  :group 'lsp-haskell-plugins
   :package-version '(lsp-mode . "8.0.1")
   :lsp-path "haskell.plugin.pragmas-completion.globalOn")
 
 (lsp-defcustom lsp-haskell-plugin-pragmas-disable-global-on t
   "Enables pragmas-disable plugin"
   :type 'boolean
-  :group 'lsp-haskell
+  :group 'lsp-haskell-plugins
   :package-version '(lsp-mode . "8.0.1")
   :lsp-path "haskell.plugin.pragmas-disable.globalOn")
 
 (lsp-defcustom lsp-haskell-plugin-pragmas-suggest-global-on t
   "Enables pragmas-suggest plugin"
   :type 'boolean
-  :group 'lsp-haskell
+  :group 'lsp-haskell-plugins
   :package-version '(lsp-mode . "8.0.1")
   :lsp-path "haskell.plugin.pragmas-suggest.globalOn")
 
