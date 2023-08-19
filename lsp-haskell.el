@@ -47,13 +47,15 @@
 
 (defcustom-lsp lsp-haskell-formatting-provider
   "ormolu"
-  "The formatter to use when formatting a document or range. Ensure the plugin is enabled."
+  "The formatter to use when formatting a document or range.
+Ensure the plugin is enabled."
   :group 'lsp-haskell
   :type '(choice (const "brittany") (const "floskell") (const "fourmolu") (const "ormolu") (const "stylish-haskell") (const "none"))
   :lsp-path "haskell.formattingProvider")
 (defcustom-lsp lsp-haskell-check-project
   t
-  "Whether to typecheck the entire project on load. It could lead to bad perfomance in large projects."
+  "Whether to typecheck the entire project on load.
+It could lead to bad perfomance in large projects."
   :group 'lsp-haskell
   :type 'boolean
   :lsp-path "haskell.checkProject")
@@ -150,7 +152,9 @@
   :lsp-path "haskell.plugin.tactics.globalOn")
 (defcustom-lsp lsp-haskell-plugin-tactics-config-auto-gas
   4
-  "The depth of the search tree when performing \"Attempt to fill hole\". Bigger values will be able to derive more solutions, but will take exponentially more time."
+  "The depth of the search tree when performing \"Attempt to fill hole\".
+Bigger values will be able to derive more solutions,
+but will take exponentially more time."
   :group 'lsp-haskell-plugins
   :type 'number
   :lsp-path "haskell.plugin.tactics.config.auto_gas")
@@ -220,6 +224,43 @@
   :group 'lsp-haskell-plugins
   :type 'boolean
   :lsp-path "haskell.plugin.refineImports.globalOn")
+
+;; Updated for haskell-language-server 2.1.0.0
+
+(lsp-defcustom lsp-haskell-plugin-cabal-code-actions-on t
+  "Enables cabal code actions"
+  :type 'boolean
+  :group 'lsp-haskell
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.cabal.codeActionsOn")
+
+(lsp-defcustom lsp-haskell-plugin-overloaded-record-dot-global-on t
+  "Enables overloaded-record-dot plugin"
+  :type 'boolean
+  :group 'lsp-haskell
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.overloaded-record-dot.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-pragmas-completion-global-on t
+  "Enables pragmas-completion plugin"
+  :type 'boolean
+  :group 'lsp-haskell
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.pragmas-completion.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-pragmas-disable-global-on t
+  "Enables pragmas-disable plugin"
+  :type 'boolean
+  :group 'lsp-haskell
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.pragmas-disable.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-pragmas-suggest-global-on t
+  "Enables pragmas-suggest plugin"
+  :type 'boolean
+  :group 'lsp-haskell
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.pragmas-suggest.globalOn")
 
 ;; ---------------------------------------------------------------------
 ;; Non-language server options
@@ -298,7 +339,7 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
     :major-modes '(haskell-mode haskell-literate-mode haskell-tng-mode haskell-cabal-mode)
     ;; This is arbitrary.
     :server-id 'lsp-haskell
-    ;; HLS does not currently send 'workspace/configuration' on startup (https://github.com/haskell/haskell-language-server/issues/2762), 
+    ;; HLS does not currently send 'workspace/configuration' on startup (https://github.com/haskell/haskell-language-server/issues/2762),
     ;; so we need to push the configuration to it manually on startup. We should be able to
     ;; get rid of this once the issue is fixed in HLS.
     :initialized-fn (lambda (workspace)
