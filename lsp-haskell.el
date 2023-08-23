@@ -241,6 +241,138 @@ but will take exponentially more time."
   :package-version '(lsp-mode . "8.0.1")
   :lsp-path "haskell.plugin.cabal.completionOn")
 
+(lsp-defcustom lsp-haskell-plugin-pragmas-suggest-global-on t
+  "Enables pragmas-suggest plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.pragmas-suggest.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-alternate-number-format-global-on t
+  "Enables alternateNumberFormat plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.alternateNumberFormat.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-call-hierarchy-global-on t
+  "Enables callHierarchy plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.callHierarchy.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-change-type-signature-global-on t
+  "Enables changeTypeSignature plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.changeTypeSignature.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-class-code-actions-on t
+  "Enables class code actions"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.class.codeActionsOn")
+
+(lsp-defcustom lsp-haskell-plugin-class-code-lens-on t
+  "Enables class code lenses"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.class.codeLensOn")
+
+(lsp-defcustom lsp-haskell-plugin-eval-config-diff t
+  "Enable the diff output (WAS/NOW) of eval lenses"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.eval.config.diff")
+
+(lsp-defcustom lsp-haskell-plugin-eval-config-exception nil
+  "Enable marking exceptions with `*** Exception:` similarly to doctest and GHCi."
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.eval.config.exception")
+
+(lsp-defcustom lsp-haskell-plugin-explicit-fields-global-on t
+  "Enables explicit-fields plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.explicit-fields.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-explicit-fixity-global-on t
+  "Enables explicit-fixity plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.explicit-fixity.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-fourmolu-config-external nil
+  "Call out to an external "fourmolu" executable, rather than using the bundled library"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.fourmolu.config.external")
+
+(lsp-defcustom lsp-haskell-plugin-gadt-global-on t
+  "Enables gadt plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.gadt.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-ghcide-code-actions-bindings-global-on t
+  "Enables ghcide-code-actions-bindings plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.ghcide-code-actions-bindings.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-ghcide-code-actions-fill-holes-global-on t
+  "Enables ghcide-code-actions-fill-holes plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.ghcide-code-actions-fill-holes.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-ghcide-code-actions-imports-exports-global-on t
+  "Enables ghcide-code-actions-imports-exports plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.ghcide-code-actions-imports-exports.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-ghcide-code-actions-type-signatures-global-on t
+  "Enables ghcide-code-actions-type-signatures plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.ghcide-code-actions-type-signatures.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-ghcide-completions-global-on t
+  "Enables ghcide-completions plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.ghcide-completions.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-ghcide-hover-and-symbols-hover-on t
+  "Enables ghcide-hover-and-symbols hover"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.ghcide-hover-and-symbols.hoverOn")
+
+(lsp-defcustom lsp-haskell-plugin-ghcide-hover-and-symbols-symbols-on t
+  "Enables ghcide-hover-and-symbols symbols"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.ghcide-hover-and-symbols.symbolsOn")
 
 (lsp-defcustom lsp-haskell-plugin-overloaded-record-dot-global-on t
   "Enables overloaded-record-dot plugin"
@@ -263,12 +395,26 @@ but will take exponentially more time."
   :package-version '(lsp-mode . "8.0.1")
   :lsp-path "haskell.plugin.pragmas-disable.globalOn")
 
-(lsp-defcustom lsp-haskell-plugin-pragmas-suggest-global-on t
-  "Enables pragmas-suggest plugin"
+(lsp-defcustom lsp-haskell-plugin-qualify-imported-names-global-on t
+  "Enables qualifyImportedNames plugin"
   :type 'boolean
   :group 'lsp-haskell-plugins
   :package-version '(lsp-mode . "8.0.1")
-  :lsp-path "haskell.plugin.pragmas-suggest.globalOn")
+  :lsp-path "haskell.plugin.qualifyImportedNames.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-rename-config-cross-module nil
+  "Enable experimental cross-module renaming"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.rename.config.crossModule")
+
+(lsp-defcustom lsp-haskell-plugin-rename-global-on t
+  "Enables rename plugin"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.rename.globalOn")
 
 ;; ---------------------------------------------------------------------
 ;; Non-language server options
