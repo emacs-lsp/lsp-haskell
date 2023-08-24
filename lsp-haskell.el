@@ -312,7 +312,7 @@ but will take exponentially more time."
   :lsp-path "haskell.plugin.explicit-fixity.globalOn")
 
 (lsp-defcustom lsp-haskell-plugin-fourmolu-config-external nil
-  "Call out to an external "fourmolu" executable, rather than using the bundled library"
+  "Call out to an external \"fourmolu\" executable, rather than using the bundled library"
   :type 'boolean
   :group 'lsp-haskell-plugins
   :package-version '(lsp-mode . "8.0.1")
