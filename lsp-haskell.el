@@ -435,7 +435,7 @@ you override that setting then this one will have no effect."
   :type 'string)
 
 (defcustom lsp-haskell-server-args
-  `("-d" "-l" ,lsp-haskell-server-log-file)
+  `("-l" ,lsp-haskell-server-log-file)
   "The arguments for starting the language server.
 For a debug log when using haskell-language-server, use `-d -l /tmp/hls.log'."
   :group 'lsp-haskell
