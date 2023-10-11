@@ -374,6 +374,13 @@ but will take exponentially more time."
   :package-version '(lsp-mode . "8.0.1")
   :lsp-path "haskell.plugin.ghcide-hover-and-symbols.symbolsOn")
 
+(lsp-defcustom lsp-haskell-plugin-ormolu-config-external nil
+  "Call out to an external 'ormolu' executable, rather than using the bundled library"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.ormolu.config.external")
+
 (lsp-defcustom lsp-haskell-plugin-overloaded-record-dot-global-on t
   "Enables overloaded-record-dot plugin"
   :type 'boolean
