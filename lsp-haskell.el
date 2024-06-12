@@ -484,6 +484,13 @@ These are assembled from the customizable variables `lsp-haskell-server-path'
 and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
   (funcall lsp-haskell-server-wrapper-function (append (list lsp-haskell-server-path "--lsp") lsp-haskell-server-args) ))
 
+(defun lsp-haskell--action-filter (command)
+  "lsp-mode transforms JSON false values in code action
+arguments to JSON null values when sending the requests back to
+the server. We need to explicitly tell it which code action
+arguments are non-nullable booleans."
+  (lsp-fix-code-action-booleans command '(:restrictToOriginatingFile :withSig)))
+
 ;; This mapping is set for 'haskell-mode -> haskell' in the lsp-mode repo itself. If we move
 ;; it there, then delete it from here.
 ;; It also isn't *too* important: it only sets the language ID, see
@@ -511,6 +518,7 @@ and `lsp-haskell-server-args' and `lsp-haskell-server-wrapper-function'."
     ;; we should set something consistent here.
     :language-id "haskell"
     :completion-in-comments? lsp-haskell-completion-in-comments
+    :action-filter #'lsp-haskell--action-filter
     ))
 
 ;; ---------------------------------------------------------------------
