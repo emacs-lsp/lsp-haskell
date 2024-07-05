@@ -65,6 +65,16 @@ It could lead to bad perfomance in large projects."
   :group 'lsp-haskell
   :type 'number
   :lsp-path "haskell.maxCompletions")
+(defcustom-lsp lsp-haskell-session-loading
+  "singleComponent"
+  "Preferred approach for loading package components. Setting this
+to 'multiple components' (EXPERIMENTAL) allows the build
+tool (such as `cabal` or `stack`) to load multiple components at
+once `https://github.com/haskell/cabal/pull/8726', which is a
+significant improvement."
+  :group 'lsp-haskell
+  :type '(choice (const "singleComponent") (const "multipleComponents"))
+  :lsp-path "haskell.sessionLoading")
 
 ;; ---------------------------------------------------------------------
 ;; Plugin-specific configuration
