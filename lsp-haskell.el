@@ -441,7 +441,7 @@ but will take exponentially more time."
   :lsp-path "haskell.plugin.rename.globalOn")
 
 (lsp-defcustom lsp-haskell-plugin-semantic-tokens-global-on t
-  "Enables semanticTokens plugin"
+  "Enables semantic tokens plugin"
   :type 'boolean
   :group 'lsp-haskell-plugins
   :package-version '(lsp-mode . "8.0.1")
