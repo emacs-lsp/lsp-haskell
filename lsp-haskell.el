@@ -235,7 +235,7 @@ but will take exponentially more time."
   :type 'boolean
   :lsp-path "haskell.plugin.refineImports.globalOn")
 
-;; Updated for haskell-language-server 2.1.0.0
+;; Updated for haskell-language-server 2.9.0.1
 
 (lsp-defcustom lsp-haskell-plugin-cabal-code-actions-on t
   "Enables cabal code actions"
@@ -250,6 +250,13 @@ but will take exponentially more time."
   :group 'lsp-haskell-plugins
   :package-version '(lsp-mode . "8.0.1")
   :lsp-path "haskell.plugin.cabal.completionOn")
+
+(lsp-defcustom lsp-haskell-plugin-cabal-diagnostics-on t
+  "Enables cabal diagnostics"
+  :type 'boolean
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.cabal.diagnosticsOn")
 
 (lsp-defcustom lsp-haskell-plugin-pragmas-suggest-global-on t
   "Enables pragmas-suggest plugin"
@@ -434,11 +441,102 @@ but will take exponentially more time."
   :lsp-path "haskell.plugin.rename.globalOn")
 
 (lsp-defcustom lsp-haskell-plugin-semantic-tokens-global-on t
-  "Enables semantic-tokens plugin"
+  "Enables semanticTokens plugin"
   :type 'boolean
   :group 'lsp-haskell-plugins
   :package-version '(lsp-mode . "8.0.1")
   :lsp-path "haskell.plugin.semanticTokens.globalOn")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-class-method-token "method"
+  "Semantic tokens class method token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.classMethodToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-class-token "class"
+  "Semantic tokens class token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.classToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-data-constructor-token "enumMember"
+  "Semantic tokens data constructor token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.dataConstructorToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-function-token "function"
+  "Semantic tokens function token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.functionToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-module-token "module"
+  "Semantic tokens module token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.moduleToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-operator-token "operator"
+  "Semantic tokens operator token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.operatorToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-pattern-synonym-token "macro"
+  "Semantic tokens pattern synonym token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.patternSynonymToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-record-field-token "property"
+  "Semantic tokens record field token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.recordFieldToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-type-constructor-token "enum"
+  "Semantic tokens type constructor token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.typeConstructorToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-type-family-token "interface"
+  "Semantic tokens type family token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.typeFamilyToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-type-synonym-token "type"
+  "Semantic tokens type synonym token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.typeSynonymToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-type-variable-token "typeParameter"
+  "Semantic tokens type variable token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.typeVariableToken")
+
+(lsp-defcustom lsp-haskell-plugin-semantic-tokens-config-variable-token "variable"
+  "Semantic tokens variable token"
+  :type 'string
+  :group 'lsp-haskell-plugins
+  :package-version '(lsp-mode . "8.0.1")
+  :lsp-path "haskell.plugin.semanticTokens.config.variableToken")
 
 ;; ---------------------------------------------------------------------
 ;; Non-language server options
