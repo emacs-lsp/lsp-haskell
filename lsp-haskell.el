@@ -714,13 +714,14 @@ arguments are non-nullable booleans."
 (add-to-list 'lsp-language-id-configuration '(haskell-literate-mode . "haskell"))
 (add-to-list 'lsp-language-id-configuration '(haskell-tng-mode . "haskell"))
 (add-to-list 'lsp-language-id-configuration '(haskell-cabal-mode . "haskell"))
+(add-to-list 'lsp-language-id-configuration '(haskell-ts-mode . "haskell"))
 
 ;; Register the client itself
 (lsp-register-client
   (make-lsp--client
     :new-connection (lsp-stdio-connection (lambda () (lsp-haskell--server-command)))
     ;; Should run under haskell-mode, haskell-literate-mode and haskell-tng-mode. We need to list haskell-literate-mode even though it's a derived mode of haskell-mode.
-    :major-modes '(haskell-mode haskell-literate-mode haskell-tng-mode haskell-cabal-mode)
+    :major-modes '(haskell-mode haskell-literate-mode haskell-tng-mode haskell-cabal-mode haskell-ts-mode)
     ;; This is arbitrary.
     :server-id 'lsp-haskell
     ;; HLS does not currently send 'workspace/configuration' on startup (https://github.com/haskell/haskell-language-server/issues/2762),
