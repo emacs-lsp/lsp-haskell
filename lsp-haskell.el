@@ -724,12 +724,6 @@ arguments are non-nullable booleans."
     :major-modes '(haskell-mode haskell-literate-mode haskell-tng-mode haskell-cabal-mode haskell-ts-mode)
     ;; This is arbitrary.
     :server-id 'lsp-haskell
-    ;; HLS does not currently send 'workspace/configuration' on startup (https://github.com/haskell/haskell-language-server/issues/2762),
-    ;; so we need to push the configuration to it manually on startup. We should be able to
-    ;; get rid of this once the issue is fixed in HLS.
-    :initialized-fn (lambda (workspace)
-                      (with-lsp-workspace workspace
-                        (lsp--set-configuration (lsp-configuration-section "haskell"))))
     :synchronize-sections '("haskell")
     ;; This is somewhat irrelevant, but it is listed in lsp-language-id-configuration, so
     ;; we should set something consistent here.
