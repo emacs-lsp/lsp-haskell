@@ -14,7 +14,6 @@
 
 (depends-on "emacs" "27.1")
 (depends-on "lsp-mode")
-(depends-on "haskell-mode")
 
 (development
  (depends-on "f")
