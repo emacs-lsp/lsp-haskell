@@ -1,3 +1,5 @@
+;; -*- mode: eask; lexical-binding: t -*-
+
 (package "lsp-haskell"
          "1.1"
          "Haskell support for lsp-mode")
