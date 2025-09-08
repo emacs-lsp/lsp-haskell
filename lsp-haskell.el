@@ -693,6 +693,26 @@ Note that this must be set to true in order to get completion of pragmas."
 ;; ---------------------------------------------------------------------
 ;; Starting the server and registration with lsp-mode
 
+(cl-defmethod lsp-clients-extract-signature-on-hover (contents (_server-id (eql lsp-haskell)))
+  "Display the type signature of the function under point."
+  (let* ((groups (--filter (s-equals? "```haskell" (car it))
+                           (-partition-by #'s-blank?
+                                          (->> (lsp-get contents :value)
+                                               s-trim
+                                               s-lines))))
+         (type-sig-group
+          (car (--filter (--any? (s-contains? (symbol-name (symbol-at-point))
+                                              it)
+                                 it)
+                         groups))))
+    (lsp--render-string
+     (->> (or type-sig-group (car groups))
+          (-drop 1)                     ; ``` LANG
+          (-drop-last 1)                ; ```
+          (-map #'s-trim)
+          (s-join " "))
+     "haskell")))
+
 (defun lsp-haskell--server-command ()
   "Command and arguments for launching the inferior language server process.
 These are assembled from the customizable variables `lsp-haskell-server-path'
